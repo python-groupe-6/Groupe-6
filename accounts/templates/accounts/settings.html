@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Paramétrages - EduQuiz AI{% endblock %}
+
+
+{% block content %}
+<div class="animate-fade-in">
+    <div class="mb-4">
+        <h1 class="brand-font display-6 text-primary">Paramétrages</h1>
+        <p class="text-muted">Gérez vos préférences et la sécurité de votre compte.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="list-group list-group-flush bg-white rounded-5 shadow-sm border p-3">
+                <a href="javascript:void(0)" id="tab-account"
+                    class="settings-tab list-group-item list-group-item-action border-0 rounded-4 py-3 active mb-2">
+                    <div class="d-flex align-items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>Compte</span>
+                    </div>
+                </a>
+                <a href="javascript:void(0)" id="tab-security"
+                    class="settings-tab list-group-item list-group-item-action border-0 rounded-4 py-3 mb-2">
+                    <div class="d-flex align-items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        <span>Sécurité</span>
+                    </div>
+                </a>
+                <a href="javascript:void(0)" id="tab-notifications"
+                    class="settings-tab list-group-item list-group-item-action border-0 rounded-4 py-3 mb-2">
+                    <div class="d-flex align-items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span>Notifications</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="bg-white p-4 p-md-5 rounded-5 shadow-sm border min-height-400">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-4 mb-4" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <!-- Section Compte -->
+                <div id="section-account" class="settings-section">
+                    <h4 class="fw-bold mb-4 brand-font">Préférences Générales</h4>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="preferences">
+                        <div class="mb-4">
+                            {{ form.dark_mode|as_crispy_field }}
+                        </div>
+                        <div class="mb-5">
+                            {{ form.language|as_crispy_field }}
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary-custom px-5">Enregistrer les
+                                préférences</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Section Sécurité -->
+                <div id="section-security" class="settings-section d-none"
+                    data-has-errors="{% if password_form.errors %}true{% else %}false{% endif %}">
+                    <h4 class="fw-bold mb-4 brand-font">Sécurité du Compte</h4>
+                    <p class="text-muted mb-4 small">Modifiez votre mot de passe pour maintenir la sécurité de votre
+                        compte.</p>
+                    <form method="post" action="{% url 'accounts:settings' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="password_change">
+                        {{ password_form|crispy }}
+                        <div class="text-end mt-4">
+                            <button type="submit" class="btn btn-primary-custom px-5">Mettre à jour le mot de
+                                passe</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Section Notifications -->
+                <div id="section-notifications" class="settings-section d-none">
+                    <h4 class="fw-bold mb-4 brand-font">Notifications</h4>
+                    <p class="text-muted mb-4 small">Choisissez comment vous souhaitez être informé.</p>
+                    <form method="post" action="{% url 'accounts:settings' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="notifications">
+                        <div class="list-group list-group-flush border-top border-bottom mb-5">
+                            <div class="list-group-item px-0 py-3 border-0">
+                                <div
+                                    class="form-check form-switch d-flex justify-content-between align-items-center p-0">
+                                    <label class="form-check-label h6 mb-0" for="notifyEmail">Alertes par Email</label>
+                                    <input class="form-check-input ms-0" type="checkbox" id="notifyEmail" checked>
+                                </div>
+                                <small class="text-muted">Recevez des rapports hebdomadaires sur vos progrès.</small>
+                            </div>
+                            <div class="list-group-item px-0 py-3 border-0">
+                                <div
+                                    class="form-check form-switch d-flex justify-content-between align-items-center p-0">
+                                    <label class="form-check-label h6 mb-0" for="notifyTips">Conseils de
+                                        révision</label>
+                                    <input class="form-check-input ms-0" type="checkbox" id="notifyTips">
+                                </div>
+                                <small class="text-muted">Des astuces IA pour mieux mémoriser vos cours.</small>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary-custom px-5">Enregistrer les
+                                notifications</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tabs = document.querySelectorAll('.settings-tab');
+        const sections = document.querySelectorAll('.settings-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                const sectionId = 'section-' + this.id.split('-')[1];
+
+                // Update tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+
+                // Update sections
+                sections.forEach(s => s.classList.add('d-none'));
+                document.getElementById(sectionId).classList.remove('d-none');
+            });
+        });
+
+        // Keep tab open if there are errors
+        const securitySection = document.getElementById('section-security');
+        if (securitySection && securitySection.getAttribute('data-has-errors') === 'true') {
+            document.getElementById('tab-security').click();
+        }
+    });
+</script>
+{% endblock %}

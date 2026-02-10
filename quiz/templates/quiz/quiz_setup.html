@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row justify-content-center animate-fade-in">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden"
+            style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);">
+            <div class="card-header bg-transparent border-0 pt-5 pb-0 text-center">
+                <div class="icon-circle mb-3" style="width: 64px; height: 64px; font-size: 1.8rem;">✨</div>
+                <h2 class="brand-font text-primary mb-2">{% trans "Nouveau Quiz" %}</h2>
+                <p class="text-muted">Importez votre cours et laissez l'IA générer vos questions.</p>
+            </div>
+
+            <div class="card-body p-4 p-md-5 pt-0">
+                <form method="post" enctype="multipart/form-data" class="needs-validation">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        {{ form.document|as_crispy_field }}
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            {{ form.num_questions|as_crispy_field }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.difficulty|as_crispy_field }}
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-5">
+                        <button type="submit" class="btn btn-primary-custom btn-lg w-100 py-3 rounded-pill shadow-lg">
+                            Lancer la génération <span class="ms-2">✨</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

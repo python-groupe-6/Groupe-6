@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Abonnement - EduQuiz AI{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in">
+    <div class="text-center mb-5">
+        <h1 class="brand-font display-6 text-primary">Abonnement</h1>
+        <p class="text-muted lead">Choisissez le plan qui correspond à vos besoins d'apprentissage.</p>
+    </div>
+
+    <!-- Current Plan Info -->
+    <div
+        class="bg-primary-subtle border border-primary-subtle p-4 rounded-5 mb-5 d-flex align-items-center justify-content-between">
+        <div>
+            <h5 class="fw-bold text-primary mb-1">Plan Actuel : Gratuit</h5>
+            <p class="mb-0 text-primary-emphasis">Vous utilisez la version gratuite d'EduQuiz AI.</p>
+        </div>
+        <span class="badge bg-primary px-3 py-2 rounded-pill">Actif</span>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        <!-- Free Plan -->
+        <div class="col-md-5">
+            <div class="bg-white p-5 rounded-5 shadow-sm border border-light text-center h-100 position-relative">
+                <h3 class="fw-bold mb-4">Gratuit</h3>
+                <div class="display-5 fw-bold mb-4">0€<span class="fs-6 text-muted fw-normal">/ mois</span></div>
+                <ul class="list-unstyled text-start mb-5 opacity-75">
+                    <li class="mb-3">✅ 5 PDF par mois</li>
+                    <li class="mb-3">✅ Quiz de base</li>
+                    <li class="mb-3">✅ Flashcards standard</li>
+                    <li class="mb-3 text-muted text-decoration-line-through">❌ Support prioritaire</li>
+                </ul>
+                <button class="btn btn-light rounded-pill w-100 py-3 border" disabled>Plan Actuel</button>
+            </div>
+        </div>
+        <!-- Pro Plan -->
+        <div class="col-md-5">
+            <div class="bg-white p-5 rounded-5 shadow-lg border border-primary text-center h-100 position-relative">
+                <div class="position-absolute top-0 start-50 translate-middle">
+                    <span class="badge bg-primary px-4 py-2 rounded-pill shadow-sm">RECOMMANDÉ</span>
+                </div>
+                <h3 class="fw-bold mb-4">Pro</h3>
+                <div class="display-5 fw-bold mb-4 text-primary">9.99€<span class="fs-6 text-muted fw-normal">/
+                        mois</span></div>
+                <ul class="list-unstyled text-start mb-5">
+                    <li class="mb-3">✨ PDF illimités</li>
+                    <li class="mb-3">✨ Quiz IA avancés</li>
+                    <li class="mb-3">✨ Exportations PDF/Anki</li>
+                    <li class="mb-3">✨ Support prioritaire 24/7</li>
+                </ul>
+                <button class="btn btn-primary-custom rounded-pill w-100 py-3 shadow-lg">Devenir Pro ✨</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

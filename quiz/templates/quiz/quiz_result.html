@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="results-wrapper">
+    <div class="container animate-fade-in" style="max-width: 900px;">
+        <div class="text-center mb-5">
+            <h1 class="brand-font mb-2 display-4">Félicitations !</h1>
+            <p class="text-muted fs-5">Voici le bilan de votre performance</p>
+
+            <div class="score-card d-inline-block mx-auto mt-4">
+                <div class="circular-progress-container">
+                    {% widthratio score total 100 as score_pct %}
+                    <div class="circular-progress {% if score == total %}perfect{% elif score|add:score >= total %}good{% else %}average{% endif %} progress-circular-dynamic"
+                        data-percent="{{ score_pct }}">
+
+
+                        <div class="progress-value">
+                            {{ score }}
+                            <span class="progress-total">/ {{ total }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    {% if score == total %}
+                    <div class="score-badge bg-success-soft">
+                        <span>🏆 Excellence Parfaite</span>
+                    </div>
+                    {% elif score|add:score >= total %}
+                    <div class="score-badge bg-primary-soft" style="background: #E0E7FF; color: #3730A3;">
+                        <span>👏 Très Bel Effort</span>
+                    </div>
+                    {% else %}
+                    <div class="score-badge bg-warning-soft" style="background: #FEF3C7; color: #92400E;">
+                        <span>💪 Continuez ainsi</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="{% url 'quiz:quiz_setup' %}" class="btn btn-primary-custom px-4 py-3">
+
+                        <i class="fas fa-redo me-2"></i> Nouveau Quiz
+                    </a>
+                    <a href="{% url 'core:home' %}" class="btn btn-outline-secondary rounded-pill px-4 py-3 fw-bold">
+
+                        <i class="fas fa-home me-2"></i> Accueil
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h4 class="mb-4 brand-font d-flex align-items-center">
+                <span class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3"
+                    style="width: 32px; height: 32px; font-size: 0.9rem;">
+                    <i class="fas fa-list-check"></i>
+                </span>
+                Analyse détaillée
+            </h4>
+
+            <div class="results-accordion" id="resultsAccordion">
+                {% for r in results %}
+                <div class="accordion-item border-0 mb-3 shadow-sm rounded-4 overflow-hidden">
+                    <h2 class="accordion-header">
+                        <button
+                            class="accordion-button collapsed {% if r.is_correct %}bg-correct-soft{% else %}bg-incorrect-soft{% endif %}"
+                            type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}">
+
+                            <div class="d-flex align-items-center w-100">
+                                <span class="me-3 fs-4">{% if r.is_correct %}✅{% else %}❌{% endif %}</span>
+                                <div class="text-start">
+                                    <span class="d-block small text-muted text-uppercase fw-bold">Question {{
+                                        forloop.counter }}</span>
+                                    <span class="text-dark fw-bold">{{ r.question|truncatechars:60 }}</span>
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse"
+                        data-bs-parent="#resultsAccordion">
+                        <div class="accordion-body bg-white p-4">
+                            <p class="fw-bold fs-5 mb-4 text-dark">{{ r.question }}</p>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="answer-card {% if r.is_correct %}correct{% else %}incorrect{% endif %}">
+                                        <span
+                                            class="label-pill {% if r.is_correct %}bg-success-soft{% else %}bg-danger-soft{% endif %}">Votre
+                                            réponse</span>
+                                        <div class="fw-bold">{{ r.user_answer }}</div>
+                                    </div>
+                                </div>
+                                {% if not r.is_correct %}
+                                <div class="col-md-6">
+                                    <div class="answer-card correct">
+                                        <span class="label-pill bg-success-soft">Bonne réponse</span>
+                                        <div class="fw-bold text-success">{{ r.correct_answer }}</div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            {% if r.explanation %}
+                            <div class="explanation-box mt-4 p-4">
+                                <div class="d-flex gap-3">
+                                    <div class="fs-3">💡</div>
+                                    <div>
+                                        <small class="text-primary fw-bold text-uppercase d-block mb-1">Analyse de
+                                            l'IA</small>
+                                        <div class="text-muted lh-lg">{{ r.explanation }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const cp = document.querySelector('.progress-circular-dynamic');
+        if (cp) {
+            const percent = cp.getAttribute('data-percent');
+            if (percent) {
+                cp.style.setProperty('--score-percent', percent);
+            }
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Conditions d'utilisation - EduQuiz AI{% endblock %}
+
+{% block content %}
+<div class="container py-5 animate-fade-in">
+    <div class="max-width-800 mx-auto">
+        <h1 class="brand-font mb-5">Conditions d'utilisation</h1>
+
+        <div class="support-content text-muted">
+            <p class="mb-4">Dernière mise à jour : {% now "d F Y" %}</p>
+
+            <h4 class="text-dark fw-bold mb-3">1. Acceptation des conditions</h4>
+            <p class="mb-4">En utilisant EduQuiz AI, vous acceptez d'être lié par les présentes conditions
+                d'utilisation.</p>
+
+            <h4 class="text-dark fw-bold mb-3">2. Utilisation du service</h4>
+            <p class="mb-4">Le service est destiné à un usage éducatif. Vous êtes responsable du contenu que vous
+                téléchargez sur la plateforme.</p>
+
+            <h4 class="text-dark fw-bold mb-3">3. Propriété intellectuelle</h4>
+            <p class="mb-4">La technologie de génération de quiz appartient à EduQuiz AI. Les documents que vous
+                téléchargez restent votre propriété.</p>
+
+            <p class="mt-5 small text-center italic">Ceci est une page de service opérationnelle. Le contenu juridique
+                définitif doit être validé par un professionnel.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

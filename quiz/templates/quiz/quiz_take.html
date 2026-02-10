@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container animate-fade-in" style="max-width: 800px;">
+    <div class="text-center mb-5">
+        <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2 mb-3">Mode Évaluation</span>
+        <h2 class="brand-font display-6">À vous de jouer !</h2>
+        <p class="text-muted">Prenez le temps de bien lire chaque question.</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% for q in quiz_data %}
+        <div class="card mb-4 border-0 shadow-sm rounded-4 overflow-hidden hover-shadow transition-all">
+            <div class="card-body p-4 p-md-5">
+                <div class="d-flex align-items-center gap-2 mb-4">
+                    <span class="badge rounded-pill bg-primary px-3 py-2 fw-bold" style="font-size: 0.75rem;">QUESTION
+                        {{ forloop.counter }}</span>
+                </div>
+
+                <h5 class="card-title text-dark mb-4 fw-bold" style="font-size: 1.25rem;">{{ q.question }}</h5>
+
+                <div class="d-flex flex-column gap-3">
+                    {% for option in q.options %}
+                    <label class="option-label position-relative">
+                        <input class="form-check-input position-absolute opacity-0" type="radio"
+                            name="question_{{ forloop.parentloop.counter0 }}" value="{{ option }}" required>
+                        <div
+                            class="d-flex align-items-center gap-3 p-3 border rounded-4 cursor-pointer transition-all bg-light bg-opacity-50 hover-bg-white border-light-subtle shadow-sm-hover">
+                            <div class="custom-radio-indicator border rounded-circle d-flex align-items-center justify-content-center"
+                                style="width: 22px; height: 22px; transition: all 0.2s;"></div>
+                            <span class="fs-6 text-dark opacity-75">{{ option }}</span>
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="d-grid gap-2 mt-5 mb-5">
+            <button type="submit" class="btn btn-success btn-lg rounded-pill fw-bold py-3 shadow-lg transform-hover">
+                Valider mes réponses 🚀
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Custom Radio Styles for this page */
+    .option-label input:checked+div {
+        border-color: var(--primary) !important;
+        background-color: rgba(79, 70, 229, 0.05) !important;
+    }
+
+    .option-label input:checked+div .custom-radio-indicator {
+        border-color: var(--primary) !important;
+        background-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+    }
+
+    .option-label input:checked+div span {
+        color: var(--primary) !important;
+        font-weight: 600;
+    }
+
+    .hover-shadow:hover {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+        transform: translateY(-2px);
+    }
+
+    .transition-all {
+        transition: all 0.2s ease;
+    }
+
+    .transform-hover:hover {
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}

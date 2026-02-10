@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Politique de Confidentialité - EduQuiz AI{% endblock %}
+
+{% block content %}
+<div class="container py-5 animate-fade-in">
+    <div class="max-width-800 mx-auto">
+        <h1 class="brand-font mb-5">Politique de Confidentialité</h1>
+
+        <div class="support-content text-muted">
+            <p class="mb-4">Dernière mise à jour : {% now "d F Y" %}</p>
+
+            <h4 class="text-dark fw-bold mb-3">1. Collecte des données</h4>
+            <p class="mb-4">Nous collectons uniquement les informations nécessaires au bon fonctionnement de votre
+                compte et à la génération de vos quiz.</p>
+
+            <h4 class="text-dark fw-bold mb-3">2. Utilisation des documents</h4>
+            <p class="mb-4">Vos documents PDF sont traités temporairement par notre IA pour générer le quiz, puis ne
+                sont pas conservés sur nos serveurs de manière permanente sans votre accord.</p>
+
+            <h4 class="text-dark fw-bold mb-3">3. Vos droits</h4>
+            <p class="mb-4">Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression
+                de vos données personnelles.</p>
+
+            <p class="mt-5 small text-center italic">Ceci est une page de service opérationnelle. Le contenu juridique
+                définitif doit être validé par un professionnel.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

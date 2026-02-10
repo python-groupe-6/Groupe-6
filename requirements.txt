@@ -1,0 +1,11 @@
+pypdf
+streamlit
+spacy
+python-dotenv
+pandas
+fpdf2
+google-generativeai
+plotly
+python-docx
+gTTS
+psycopg2-binary

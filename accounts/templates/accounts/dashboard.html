@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}Dashboard - EduQuiz AI{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in">
+    <div class="mb-4">
+        <h1 class="brand-font display-6 text-primary">{% trans "Tableau de bord" %}</h1>
+        {% trans "Bienvenue," as welcome_prefix %}
+        {% trans ". Voici un aperçu de vos activités." as welcome_suffix %}
+        <p class="text-muted">{{ welcome_prefix }} {{ user.username }}{{ welcome_suffix }}</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="bg-white p-4 rounded-4 shadow-sm border border-light text-center h-100">
+                <div class="icon-circle mb-3 bg-primary-subtle text-primary mx-auto"
+                    style="width: 50px; height: 50px; font-size: 1.2rem;">📝</div>
+                <h3 class="fw-bold mb-1">{{ stats.total_quizzes }}</h3>
+                <p class="small text-muted mb-0">{% trans "Quiz générés" %}</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="bg-white p-4 rounded-4 shadow-sm border border-light text-center h-100">
+                <div class="icon-circle mb-3 bg-success-subtle text-success mx-auto"
+                    style="width: 50px; height: 50px; font-size: 1.2rem;">✅</div>
+                <h3 class="fw-bold mb-1">{{ stats.completed_quizzes }}</h3>
+                <p class="small text-muted mb-0">{% trans "Quiz terminés" %}</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="bg-white p-4 rounded-4 shadow-sm border border-light text-center h-100">
+                <div class="icon-circle mb-3 bg-warning-subtle text-warning mx-auto"
+                    style="width: 50px; height: 50px; font-size: 1.2rem;">📊</div>
+                <h3 class="fw-bold mb-1">{{ stats.average_score }}%</h3>
+                <p class="small text-muted mb-0">{% trans "Score moyen" %}</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="bg-white p-4 rounded-4 shadow-sm border border-light text-center h-100">
+                <div class="icon-circle mb-3 bg-info-subtle text-info mx-auto"
+                    style="width: 50px; height: 50px; font-size: 1.2rem;">⏱️</div>
+                <h3 class="fw-bold mb-1">{{ stats.time_spent }}</h3>
+                <p class="small text-muted mb-0">{% trans "Temps d'étude" %}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions & Recent Activity -->
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="bg-white p-4 rounded-5 shadow-sm border h-100">
+                <h4 class="fw-bold mb-4 brand-font">{% trans "Actions Rapides" %}</h4>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <a href="{% url 'quiz:quiz_setup' %}"
+                            class="btn btn-outline-primary w-100 py-3 rounded-4 d-flex align-items-center justify-content-center gap-2">
+                            <span>✨ {% trans "Nouveau Quiz" %}</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#"
+                            class="btn btn-outline-secondary w-100 py-3 rounded-4 d-flex align-items-center justify-content-center gap-2">
+                            <span>📂 {% trans "Mes Documents" %}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="bg-white p-4 rounded-5 shadow-sm border h-100">
+                <h4 class="fw-bold mb-4 brand-font">{% trans "Profil Rapide" %}</h4>
+                <div class="text-center">
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3"
+                        style="width: 80px; height: 80px; font-size: 2rem;">
+                        {{ user.username|make_list|first|upper }}
+                    </div>
+                    <h5 class="fw-bold mb-1">{{ user.get_full_name|default:user.username }}</h5>
+                    <p class="text-muted small mb-4">{{ user.email }}</p>
+                    <a href="{% url 'accounts:profile' %}" class="btn btn-light rounded-pill btn-sm px-4 border">{%
+                        trans "Voir le profil" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

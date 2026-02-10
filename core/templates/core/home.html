@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero animate-fade-in">
+    <h1>L'Excellence Académique <br>par l'Intelligence Artificielle</h1>
+    <p>Transformez vos supports de cours en quiz interactifs et synthèses claires. Une révision intelligente, rapide et
+        efficace.</p>
+    <div class="d-flex gap-3 justify-content-center">
+        <a href="{% url 'quiz:quiz_setup' %}"
+            class="btn btn-light btn-lg rounded-pill px-5 fw-bold text-primary shadow-lg">Lancer l'Application</a>
+        <a href="#" class="btn btn-outline-light btn-lg rounded-pill px-5 fw-bold">En savoir plus</a>
+    </div>
+</section>
+
+<section class="mb-5 animate-fade-in" style="animation-delay: 0.2s;">
+    <div class="text-center mb-5">
+        <h2 class="display-6 fw-bold">Une Suite d'Outils Complète</h2>
+        <p class="text-muted fs-5">Conçu pour les étudiants exigeants et les professionnels.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="icon-circle">📄</div>
+                <h4>Analyse Sémantique</h4>
+                <p class="text-muted">Notre IA analyse la structure profonde de vos documents pour en extraire
+                    l'essentiel.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="icon-circle">🧠</div>
+                <h4>Génération Cognitive</h4>
+                <p class="text-muted">Des questions conçues pour stimuler la mémorisation et la réflexion critique.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="icon-circle">📈</div>
+                <h4>Analytics Avancés</h4>
+                <p class="text-muted">Suivez votre courbe d'apprentissage et détectez vos lacunes instantanément.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
