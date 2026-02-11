@@ -7,6 +7,7 @@ class Quiz(models.Model):
     description = models.TextField(blank=True)
     difficulty = models.CharField(max_length=50)
     time_limit = models.IntegerField(default=5, help_text="Time limit in minutes")
+    is_exam_mode = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -121,6 +121,19 @@
         {% endfor %}
     </div>
 
+    <!-- Hidden data for JavaScript -->
+    <div id="historyDataContainer" style="display: none;" data-history='[
+            {% for item in history|dictsort:"completed_at" %}
+            {
+                "date": "{{ item.completed_at|date:"d/m" }}",
+                "score": {{ item.score }},
+                "total": {{ item.total_questions }},
+                "percent": {% widthratio item.score item.total_questions 100 %}
+            }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+         ]'>
+    </div>
+
     {% else %}
     <!-- Empty State -->
     <div class="text-center py-5 glass-card rounded-5 border-0 shadow-sm">
@@ -218,6 +231,66 @@
                 }
             });
         }, 300);
+    });
+</script>
+
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const container = document.getElementById('historyDataContainer');
+        if (!container) return;
+
+        const historyData = JSON.parse(container.getAttribute('data-history') || '[]');
+
+        if (historyData.length > 0) {
+            const trace = {
+                x: historyData.map(d => d.date),
+                y: historyData.map(d => d.percent),
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Score %',
+                line: {
+                    color: '#4f46e5',
+                    width: 3,
+                    shape: 'spline'
+                },
+                marker: {
+                    size: 8,
+                    color: '#4f46e5'
+                },
+                fill: 'tozeroy',
+                fillcolor: 'rgba(79, 70, 229, 0.05)'
+            };
+
+            const layout = {
+                margin: { t: 10, b: 40, l: 40, r: 10 },
+                xaxis: {
+                    showgrid: false,
+                    tickfont: { size: 10, color: '#6b7280' }
+                },
+                yaxis: {
+                    range: [0, 105],
+                    tickfont: { size: 10, color: '#6b7280' },
+                    gridcolor: '#f3f4f6'
+                },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                hovermode: 'closest'
+            };
+
+            const config = {
+                displayModeBar: false,
+                responsive: true
+            };
+
+            Plotly.newPlot('progressionChart', [trace], layout, config);
+        } else {
+            document.getElementById('progressionChart').innerHTML = `
+                <div class="text-center py-5">
+                    <p class="text-muted">Pas assez de données pour générer un graphique.</p>
+                </div>
+            `;
+        }
     });
 </script>
 {% endblock %}

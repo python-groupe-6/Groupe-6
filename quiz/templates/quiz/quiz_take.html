@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <form method="post" id="quizForm">
+    <form method="post" id="quizForm" data-time-limit="{{ quiz_obj.time_limit|default:5 }}">
         {% csrf_token %}
         <input type="hidden" name="time_elapsed" id="timeElapsedInput" value="00:00">
 
@@ -29,7 +29,15 @@
                         {{ forloop.counter }}</span>
                 </div>
 
-                <h5 class="card-title text-dark mb-4 fw-bold" style="font-size: 1.25rem;">{{ q.text }}</h5>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="card-title text-dark mb-0 fw-bold" style="font-size: 1.25rem;">{{ q.text }}</h5>
+                    {% if not quiz_obj.is_exam_mode %}
+                    <button type="button" class="btn btn-outline-primary btn-sm rounded-circle audio-btn"
+                        onclick="playAudio('{{ q.text|escapejs }}', this)" title="Écouter la question">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                    {% endif %}
+                </div>
 
                 <div class="d-flex flex-column gap-3">
                     {% for option in q.options %}
@@ -59,45 +67,80 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const timeLimitMinutes = {{ quiz_obj.time_limit|default: 5
-    }};
-    let timeLeftSeconds = timeLimitMinutes * 60;
-    let timeElapsedSeconds = 0;
+        const quizForm = document.getElementById('quizForm');
+        const timeElapsedInput = document.getElementById('timeElapsedInput');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timeLimitMinutes = parseInt(quizForm.getAttribute('data-time-limit') || '5');
 
-    const timerDisplay = document.getElementById('timerDisplay');
-    const timeElapsedInput = document.getElementById('timeElapsedInput');
-    const quizForm = document.getElementById('quizForm');
+        let timeLeftSeconds = timeLimitMinutes * 60;
+        let timeElapsedSeconds = 0;
 
-    function formatTime(seconds) {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    }
-
-    const timerInterval = setInterval(function () {
-        timeLeftSeconds--;
-        timeElapsedSeconds++;
-
-        // Update display
-        timerDisplay.textContent = formatTime(timeLeftSeconds);
-        timeElapsedInput.value = formatTime(timeElapsedSeconds);
-
-        // Warning colors
-        if (timeLeftSeconds <= 60) {
-            timerDisplay.classList.remove('text-primary');
-            timerDisplay.classList.add('text-danger');
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
 
-        // Time's up
-        if (timeLeftSeconds <= 0) {
-            clearInterval(timerInterval);
-            alert("Temps écoulé ! Vos réponses vont être envoyées.");
-            quizForm.submit();
-        }
-    }, 1000);
+        const timerInterval = setInterval(function () {
+            timeLeftSeconds--;
+            timeElapsedSeconds++;
 
-    // Initial display
-    timerDisplay.textContent = formatTime(timeLeftSeconds);
+            // Update display
+            timerDisplay.textContent = formatTime(timeLeftSeconds);
+            timeElapsedInput.value = formatTime(timeElapsedSeconds);
+
+            // Warning colors
+            if (timeLeftSeconds <= 60) {
+                timerDisplay.classList.remove('text-primary');
+                timerDisplay.classList.add('text-danger');
+            }
+
+            // Time's up
+            if (timeLeftSeconds <= 0) {
+                clearInterval(timerInterval);
+                alert("Temps écoulé ! Vos réponses vont être envoyées.");
+                quizForm.submit();
+            }
+        }, 1000);
+
+        // Initial display
+        // Audio Logic
+        const currentAudio = new Audio();
+
+        window.playAudio = function (text, btn) {
+            if (!text) return;
+
+            const icon = btn.querySelector('i');
+            if (currentAudio.src && !currentAudio.paused) {
+                currentAudio.pause();
+                resetAudioButtons();
+                if (currentAudio.textPlaying === text) return;
+            }
+
+            btn.classList.add('btn-primary');
+            btn.classList.remove('btn-outline-primary');
+            icon.className = 'fas fa-spinner fa-spin';
+
+            currentAudio.src = `{% url 'quiz:generate_audio' %}?text=${encodeURIComponent(text)}`;
+            currentAudio.textPlaying = text;
+
+            currentAudio.play().then(() => {
+                icon.className = 'fas fa-stop';
+            }).catch(err => {
+                console.error("Audio error:", err);
+                resetAudioButtons();
+            });
+
+            currentAudio.onended = resetAudioButtons;
+        };
+
+        function resetAudioButtons() {
+            document.querySelectorAll('.audio-btn').forEach(b => {
+                b.classList.remove('btn-primary');
+                b.classList.add('btn-outline-primary');
+                b.querySelector('i').className = 'fas fa-volume-up';
+            });
+        }
     });
 </script>
 

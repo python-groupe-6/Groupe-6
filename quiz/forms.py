@@ -2,9 +2,9 @@ from django import forms
 
 class QuizSetupForm(forms.Form):
     document = forms.FileField(
-        label="Document (PDF)",
-        help_text="Téléchargez votre cours au format PDF.",
-        widget=forms.FileInput(attrs={'accept': '.pdf'})
+        label="Document (PDF ou Word)",
+        help_text="Téléchargez votre cours au format PDF ou DOCX.",
+        widget=forms.FileInput(attrs={'accept': '.pdf,.docx'})
     )
     num_questions = forms.IntegerField(
         label="Nombre de questions",
@@ -30,4 +30,10 @@ class QuizSetupForm(forms.Form):
         min_value=1,
         max_value=60,
         widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+    is_exam_mode = forms.BooleanField(
+        label="Mode Examen Blanc",
+        required=False,
+        help_text="Chronomètre strict, pas d'explication immédiate et navigation restreinte.",
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
     )

@@ -20,12 +20,23 @@ GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
-class PDFProcessor:
+import docx
+
+class DocumentProcessor:
     @staticmethod
-    def extract_text(pdf_file):
+    def extract_text(file):
         """
-        Extracts text from an uploaded PDF file (InMemoryUploadedFile).
+        Extracts text from PDF or DOCX file.
         """
+        filename = file.name.lower()
+        if filename.endswith('.pdf'):
+            return DocumentProcessor._extract_from_pdf(file)
+        elif filename.endswith('.docx'):
+            return DocumentProcessor._extract_from_docx(file)
+        return None
+
+    @staticmethod
+    def _extract_from_pdf(pdf_file):
         try:
             reader = PdfReader(pdf_file)
             text = ""
@@ -36,6 +47,16 @@ class PDFProcessor:
             return text
         except Exception as e:
             print(f"Error reading PDF: {e}")
+            return None
+
+    @staticmethod
+    def _extract_from_docx(docx_file):
+        try:
+            doc = docx.Document(docx_file)
+            text = "\n".join([para.text for para in doc.paragraphs])
+            return text
+        except Exception as e:
+            print(f"Error reading DOCX: {e}")
             return None
 
 class QuizGeneratorService:
