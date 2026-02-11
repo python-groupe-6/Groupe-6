@@ -10,5 +10,7 @@ google-generativeai
 plotly
 python-docx
 gTTS
+gunicorn
+whitenoise
+dj-database-url
 psycopg2-binary
-openai
