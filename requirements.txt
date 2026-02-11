@@ -1,5 +1,7 @@
+django>=5.0
+django-crispy-forms
+crispy-bootstrap5
 pypdf
-streamlit
 spacy
 python-dotenv
 pandas

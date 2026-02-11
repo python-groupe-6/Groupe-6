@@ -1,90 +1,183 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}À propos - EduQuiz AI{% endblock %}
 
 {% block content %}
-<div class="container py-5 animate-fade-in">
-    <!-- Hero Section -->
-    <div class="text-center mb-5 pb-4">
-        <h1 class="brand-font display-3 text-primary mb-3">À propos d'EduQuiz AI</h1>
-        <p class="lead text-muted mx-auto" style="max-width: 800px; font-size: 1.25rem;">
-            La plateforme intelligente conçue pour révolutionner votre façon d'apprendre et de réviser.
-        </p>
+<!-- Hero Section with Background Image -->
+<section class="position-relative overflow-hidden rounded-5 mb-5 shadow-lg" style="height: 400px;">
+    <img src="{% static 'images/about_hero.png' %}" alt="EduQuiz AI Hero"
+        class="position-absolute w-100 h-100 object-fit-cover">
+    <div
+        class="position-absolute top-0 start-0 w-100 h-100 hero-gradient-overlay d-flex align-items-center justify-content-center text-center p-4">
+        <div class="max-w-800 animate-fade-in">
+            <h1 class="display-3 text-white fw-bold mb-3">L'Innovation au Service de la Réussite</h1>
+            <p class="lead text-white-50 fs-4 mx-auto" style="max-width: 700px;">
+                Découvrez comment EduQuiz AI redéfinit les standards de l'apprentissage personnalisé grâce à
+                l'Intelligence Artificielle de pointe.
+            </p>
+        </div>
     </div>
+</section>
 
-    <!-- Main Content Block -->
-    <div class="row justify-content-center mb-5">
-        <div class="col-lg-11">
-            <div class="bg-white rounded-5 shadow-sm border p-4 p-md-5 overflow-hidden position-relative">
-                <div class="position-absolute top-0 start-0 w-100 h-1 bg-primary-gradient" style="height: 4px;"></div>
-
-                <div class="row align-items-center">
-                    <div class="col-md-7 pe-md-5">
-                        <h2 class="fw-bold mb-4 brand-font">Notre Mission</h2>
-                        <p class="fs-5 text-muted mb-4" style="line-height: 1.7;">
-                            EduQuiz AI est né d'une idée simple : <span class="text-primary fw-semibold">rendre
-                                l'apprentissage plus interactif, efficace et accessible à tous.</span>
-                        </p>
-                        <p class="text-muted mb-4" style="font-size: 1.1rem;">
-                            Grâce à la fusion de l'intelligence artificielle et de la pédagogie, nous transformons vos
-                            documents PDF ou supports de cours en quiz dynamiques, flashcards et parcours personnalisés
-                            en quelques secondes.
-                        </p>
-                        <p class="text-muted mb-0" style="font-size: 1.1rem;">
-                            Que vous soyez un étudiant préparant un examen, un enseignant cherchant à dynamiser sa
-                            classe ou un professionnel en formation continue, EduQuiz AI est votre allié pour une
-                            maîtrise parfaite de vos sujets.
-                        </p>
+<div class="container py-4">
+    <!-- Our Story & Mission -->
+    <div class="row align-items-center g-5 mb-5 pb-5 scroll-reveal">
+        <div class="col-lg-6">
+            <div class="tech-pill mb-3">NOTRE MISSION</div>
+            <h2 class="display-5 fw-bold mb-4">Transformer la connaissance en <span class="text-gradient">maîtrise
+                    absolue</span></h2>
+            <p class="fs-5 text-muted mb-4 lh-lg">
+                EduQuiz AI est né d'une vision ambitieuse : briser les barrières de la compréhension traditionnelle.
+                Nous utilisons les modèles de langage les plus avancés au monde pour transformer vos documents statiques
+                en expériences d'apprentissage interactives et dynamiques.
+            </p>
+            <div class="row g-4 mt-2">
+                <div class="col-6">
+                    <div class="stat-card border-0 bg-light p-3">
+                        <div class="h3 fw-bold text-primary mb-1">98%</div>
+                        <div class="small text-muted text-uppercase fw-bold">Précision IA</div>
                     </div>
-                    <div class="col-md-5 mt-4 mt-md-0">
-                        <div class="rounded-4 p-1 bg-light shadow-inner">
-                            <div class="icon-circle bg-white shadow-sm mb-0 mx-auto"
-                                style="width: 120px; height: 120px; font-size: 3rem;">🚀</div>
+                </div>
+                <div class="col-6">
+                    <div class="stat-card border-0 bg-light p-3">
+                        <div class="h3 fw-bold text-primary mb-1">&lt; 3s</div>
+                        <div class="small text-muted text-uppercase fw-bold">Génération</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="position-relative">
+                <div class="bg-primary-gradient rounded-5 position-absolute top-0 start-0 w-100 h-100 opacity-10 floating"
+                    style="transform: translate(-20px, 20px);"></div>
+                <div class="bg-white p-4 rounded-5 shadow-lg border position-relative z-1">
+                    <div class="ratio ratio-16x9 mb-4 overflow-hidden rounded-4 shadow-lg border">
+                        <div class="vision-ai-visualizer w-100 h-100">
+                            <div class="ai-grid"></div>
+                            <div class="ai-nodes">
+                                <div class="ai-node" style="top: 20%; left: 30%;"></div>
+                                <div class="ai-node" style="top: 60%; left: 70%;"></div>
+                                <div class="ai-node" style="top: 40%; left: 80%;"></div>
+                                <div class="ai-node" style="top: 10%; left: 60%;"></div>
+                                <div class="ai-line"
+                                    style="top: 20%; left: 30%; transform: rotate(45deg); width: 80px;"></div>
+                                <div class="ai-line"
+                                    style="top: 60%; left: 70%; transform: rotate(-30deg); width: 60px;"></div>
+                            </div>
+                            <div class="ai-core-container">
+                                <div class="ai-glow"></div>
+                                <i class="fas fa-brain ai-brain-icon"></i>
+                            </div>
                         </div>
                     </div>
+                    <h5 class="fw-bold mb-3">Intelligence Hybride</h5>
+                    <p class="text-muted small mb-0">Notre technologie combine Google Gemini 2.0 et des algorithmes NLP
+                        locaux pour une fiabilité exceptionnelle, même hors ligne.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tech Stack Section -->
+    <div class="bg-light rounded-5 p-5 mb-5 scroll-reveal">
+        <div class="text-center mb-5">
+            <h3 class="fw-bold h1">Notre Écosystème Technologique</h3>
+            <p class="text-muted">Des fondations robustes pour une expérience premium</p>
+        </div>
+        <div class="row g-4 text-center">
+            <div class="col-md-3">
+                <div class="p-3">
+                    <div class="h1 mb-3 text-primary"><i class="fas fa-brain"></i></div>
+                    <h5 class="fw-bold">Google Gemini</h5>
+                    <p class="small text-muted">Moteur d'IA générative pour des questions de haute réflexion.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3">
+                    <div class="h1 mb-3 text-primary"><i class="fas fa-microchip"></i></div>
+                    <h5 class="fw-bold">Spacy NLP</h5>
+                    <p class="small text-muted">Analyse linguistique fine pour l'extraction de concepts clés.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3">
+                    <div class="h1 mb-3 text-primary"><i class="fas fa-shield-alt"></i></div>
+                    <h5 class="fw-bold">Django 5.0</h5>
+                    <p class="small text-muted">Architecture backend sécurisée, scalable et moderne.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3">
+                    <div class="h1 mb-3 text-primary"><i class="fas fa-bolt"></i></div>
+                    <h5 class="fw-bold">Vite & Tailwind</h5>
+                    <p class="small text-muted">Interface réactive et design système atomique ultra-rapide.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Features Grid -->
-    <div class="row justify-content-center">
-        <div class="col-lg-11">
-            <h3 class="text-center mb-5 brand-font">Pourquoi choisir EduQuiz AI ?</h3>
-            <div class="row g-4">
-                <div class="col-md-3">
-                    <div class="feature-card p-4 h-100">
-                        <div class="icon-circle mb-3" style="width: 50px; height: 50px; font-size: 1.25rem;">✨</div>
-                        <h5 class="fw-bold">Instantané</h5>
-                        <p class="small text-muted mb-0">Importez vos fichiers et générez vos quiz en un temps record.
-                        </p>
-                    </div>
+    <div class="row g-4 mb-5 scroll-reveal">
+        <div class="col-md-4">
+            <div class="feature-card p-5 h-100 border-0 shadow-sm">
+                <div class="icon-circle mb-4 bg-primary text-white" style="width: 60px; height: 60px;">
+                    <i class="fas fa-magic"></i>
                 </div>
-                <div class="col-md-3">
-                    <div class="feature-card p-4 h-100">
-                        <div class="icon-circle mb-3" style="width: 50px; height: 50px; font-size: 1.25rem;">🧠</div>
-                        <h5 class="fw-bold">Intelligent</h5>
-                        <p class="small text-muted mb-0">Des questions pertinentes et adaptées à votre niveau de
-                            compréhension.</p>
-                    </div>
+                <h4 class="fw-bold mb-3">Extraction magique</h4>
+                <p class="text-muted">Transformez instantanément vos PDF, Word ou images en quiz structurés sans aucun
+                    effort manuel.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card p-5 h-100 border-0 shadow-sm">
+                <div class="icon-circle mb-4 bg-secondary text-white" style="width: 60px; height: 60px;">
+                    <i class="fas fa-chart-line"></i>
                 </div>
-                <div class="col-md-3">
-                    <div class="feature-card p-4 h-100">
-                        <div class="icon-circle mb-3" style="width: 50px; height: 50px; font-size: 1.25rem;">📊</div>
-                        <h5 class="fw-bold">Analytique</h5>
-                        <p class="small text-muted mb-0">Suivez vos progrès avec des rapports détaillés en temps réel.
-                        </p>
-                    </div>
+                <h4 class="fw-bold mb-3">Analytiques d'expert</h4>
+                <p class="text-muted">Suivez votre courbe d'apprentissage avec des graphiques détaillés et identifiez
+                    vos lacunes instantanément.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card p-5 h-100 border-0 shadow-sm">
+                <div class="icon-circle mb-4 bg-accent text-white" style="width: 60px; height: 60px;">
+                    <i class="fas fa-users-cog"></i>
                 </div>
-                <div class="col-md-3">
-                    <div class="feature-card p-4 h-100">
-                        <div class="icon-circle mb-3" style="width: 50px; height: 50px; font-size: 1.25rem;">📱</div>
-                        <h5 class="fw-bold">Adaptatif</h5>
-                        <p class="small text-muted mb-0">Travaillez n'importe où, sur n'importe quel appareil.</p>
-                    </div>
-                </div>
+                <h4 class="fw-bold mb-3">Collaboration</h4>
+                <p class="text-muted">Partagez vos quiz avec vos amis ou vos élèves et créez des sessions de révision
+                    collectives.</p>
             </div>
         </div>
     </div>
+
+    <!-- Call to Action -->
+    <div class="text-center py-5 scroll-reveal">
+        <h3 class="display-6 fw-bold mb-4">Prêt à transformer vos révisions ?</h3>
+        <a href="{% url 'accounts:register' %}"
+            class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow-lg fw-bold transition-hover">
+            Démarrer gratuitement
+        </a>
+    </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach((el) => {
+            observer.observe(el);
+        });
+    });
+</script>
 {% endblock %}

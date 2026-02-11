@@ -1,8 +1,8 @@
 try:
     import spacy
 except Exception as e:
-    # Catch Pydantic ConfigError or other initialization errors
-    print(f"⚠️ Warning: Spacy import failed (likely Pydantic/Python 3.14 conflict): {e}")
+    # Catch Pydantic ConfigError or other initialization errors (common in Python 3.14)
+    print(f"[WARNING] Spacy import failed (likely Pydantic/Python 3.14 conflict): {e}")
     spacy = None
 import random
 import re

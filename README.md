@@ -7,52 +7,45 @@ Ce projet suit une méthodologie rigoureuse pour garantir sa qualité et sa modu
 1. **Cahier des charges** : [Consulter le document](./docs/Cahier_des_charges.md)
 2. **Environnement** : Utilisation de `virtualenv` et gestion stricte des dépendances via `requirements.txt`.
 3. **Développement Modulaire** :
-    - `pdf_processor.py` (Extraction)
-    - `quiz_generator.py` (Logique IA/NLP)
-    - `report_generator.py` (Export PDF)
-    - `app.py` (Interface Streamlit)
-4. **Interface** : Interface Web moderne via **Streamlit** (v2.1.0).
+    - `src/pdf_processor.py` (Extraction)
+    - `src/quiz_generator.py` (Logique IA/NLP)
+    - `src/utils.py` (Utilitaires)
+4. **Interface** : Interface Web robuste via **Django** (v5.0+).
 5. **Documentation** : [Manuel Utilisateur](./docs/Manuel_Utilisateur.md)
 
 ## ✨ Fonctionnalités
-- **Design Premium** : Interface basée sur le "Glassmorphism".
-- **Workflow Guidé** : Processus en 4 étapes pour une efficacité maximale.
-- **Intelligence Hybride** : OpenAI GPT avec fallback local Spacy.
+- **Design Premium** : Interface moderne et responsive.
+- **Workflow Django** : Gestion complète des utilisateurs, des quiz et des résultats.
+- **Intelligence Hybride** : Google Gemini avec fallback local.
 - **Export PDF** : Rapports de performance téléchargeables.
 
 ## 🚀 Démarrage Rapide
 
 ### 1. Prérequis
-- Python 3.9+
-- Clé API OpenAI (optionnelle, placée dans `.env`)
+- Python 3.14 (ou version stable supportée)
+- Clé API Google Gemini (optionnelle, placée dans `.env`)
 
 ### 2. Installation
 ```bash
-# Activation de l'environnement virtuel (Windows)
-.\venv\Scripts\activate
+# Installation des dependances via le script automatique
+.\install_dependencies.bat
+```
+
+Ou manuellement :
+```bash
+# Activation de l'environnement virtuel (.venv)
+.\.venv\Scripts\activate
 
 # Installation des dépendances
 pip install -r requirements.txt
+
+# Migrations de la base de données
+python manage.py migrate
 ```
 
-### 3. Configuration de la base de données
-
-**Option 1 : PostgreSQL (Recommandé pour la production)**
+### 3. Lancement du serveur
 ```bash
-# Créer la base de données dans PostgreSQL
-# Puis configurer le fichier .env avec vos credentials
-# Voir docs/Migration_PostgreSQL.md pour plus de détails
-
-# Vérifier la connexion
-python scripts/verify_database.py
-```
-
-**Option 2 : SQLite (Développement local)**
-L'application bascule automatiquement sur SQLite si PostgreSQL n'est pas configuré.
-
-### 4. Lancement
-```bash
-streamlit run app.py
+python manage.py runserver
 ```
 
 ## 📚 Documentation complémentaire

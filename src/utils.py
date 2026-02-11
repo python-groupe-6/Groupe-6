@@ -1,4 +1,3 @@
-import streamlit as st
 import pypdf
 import docx
 import random
@@ -19,7 +18,7 @@ def extract_text_from_file(uploaded_file):
         elif uploaded_file.name.endswith('.txt'):
             text = uploaded_file.read().decode('utf-8')
     except Exception as e:
-        st.error(f"Erreur lors de l'extraction du texte : {e}")
+        raise Exception(f"Erreur lors de l'extraction du texte : {e}")
     return text
 
 def generate_quiz_from_text(text, num_questions=5):

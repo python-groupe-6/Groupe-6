@@ -201,10 +201,35 @@
                         <li><a href="{% url 'core:about' %}" class="footer-link">À propos</a></li>
                         {% if user.is_authenticated %}
                         <li><a href="{% url 'quiz:quiz_setup' %}" class="footer-link">Nouveau Quiz</a></li>
-                        <li><a href="{% url 'accounts:dashboard' %}" class="footer-link">Tableau de bord</a></li>
                         <li><a href="{% url 'quiz:quiz_history' %}" class="footer-link">Historique</a></li>
-                        <li><a href="{% url 'accounts:profile' %}" class="footer-link">Profil</a></li>
-                        <li><a href="{% url 'accounts:settings' %}" class="footer-link">Paramètres</a></li>
+                        <li class="nav-item dropdown footer-profile-dropdown">
+                            <a href="#" class="footer-link dropdown-toggle d-flex align-items-center gap-2"
+                                id="footerProfileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                data-bs-display="static">
+                                <i class="fas fa-user-circle"></i> Mon Profil
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark border-0 shadow-lg animate-slide-down"
+                                aria-labelledby="footerProfileDropdown">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2"
+                                        href="{% url 'accounts:dashboard' %}">
+                                        <i class="fas fa-chart-line small opacity-50"></i> Tableau de bord
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2"
+                                        href="{% url 'accounts:profile' %}">
+                                        <i class="fas fa-user small opacity-50"></i> Profil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2"
+                                        href="{% url 'accounts:settings' %}">
+                                        <i class="fas fa-cog small opacity-50"></i> Paramètres
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         {% else %}
                         <li><a href="{% url 'accounts:login' %}" class="footer-link">Connexion</a></li>
                         <li><a href="{% url 'accounts:register' %}" class="footer-link">S'inscrire</a></li>
