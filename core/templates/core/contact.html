@@ -6,20 +6,105 @@
 <div class="container py-5 animate-fade-in">
     <div class="max-width-700 mx-auto text-center mb-5">
         <h1 class="brand-font mb-3">Contactez-nous</h1>
-        <p class="text-muted">Une question ? Une suggestion ? Nous sommes à votre écoute.</p>
+        <p class="text-muted fs-5">Une question, une suggestion ou un besoin de support ? Notre équipe est à votre
+            écoute.</p>
     </div>
 
-    <div class="max-width-600 mx-auto">
-        <div class="card border-0 shadow-sm rounded-4 p-4 glass-card">
-            <div class="text-center py-4">
-                <div class="mb-4">
-                    <i class="fas fa-envelope-open-text fa-4x text-primary opacity-50"></i>
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="row g-0">
+                    <!-- Contact Info Panel -->
+                    <div class="col-md-5 bg-primary text-white p-5 d-flex flex-column justify-content-between">
+                        <div>
+                            <h3 class="fw-bold mb-4">Informations</h3>
+                            <p class="opacity-75 mb-5">N'hésitez pas à nous contacter via le formulaire ou directement
+                                par email.</p>
+
+                            <div class="d-flex align-items-center gap-3 mb-4">
+                                <div class="icon-circle bg-white-transparent">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <div class="small opacity-75">Email</div>
+                                    <div class="fw-medium">contacteduquizai@gmail.com</div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-3 mb-4">
+                                <div class="icon-circle bg-white-transparent">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <div class="small opacity-75">Réponse garantie</div>
+                                    <div class="fw-medium">Sous 24h ouvrées</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="social-links mt-auto">
+                            <a href="#" class="btn btn-outline-light btn-sm rounded-circle me-2"><i
+                                    class="fab fa-twitter"></i></a>
+                            <a href="#" class="btn btn-outline-light btn-sm rounded-circle me-2"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i
+                                    class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Form Panel -->
+                    <div class="col-md-7 p-5 bg-white">
+                        <form method="post" class="needs-validation">
+                            {% csrf_token %}
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-medium">Nom complet</label>
+                                    {{ form.name }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-medium">Email</label>
+                                    {{ form.email }}
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-medium">Sujet de votre demande</label>
+                                    {{ form.subject }}
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-medium">Votre message</label>
+                                    {{ form.message }}
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill shadow-sm">
+                                        Envoyer le message <i class="fas fa-paper-plane ms-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <p class="lead mb-4">Envoyez-nous un email à :</p>
-                <h3 class="fw-bold text-primary mb-4">contact@eduquiz-ai.com</h3>
-                <p class="text-muted small">Notre équipe vous répondra dans les plus brefs délais.</p>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .bg-white-transparent {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+    }
+
+    .icon-circle {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+
+    .max-width-700 {
+        max-width: 700px;
+    }
+</style>
 {% endblock %}

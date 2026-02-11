@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Témoignages - EduQuiz AI{% endblock %}
+
+{% block content %}
+<div class="container py-5 animate-fade-in">
+    <!-- Hero Section -->
+    <div class="text-center mb-5 pb-4">
+        <h1 class="brand-font display-3 text-primary mb-3">Témoignages</h1>
+        <p class="lead text-muted mx-auto" style="max-width: 800px; font-size: 1.25rem;">
+            Découvrez ce que nos utilisateurs pensent d'EduQuiz AI
+        </p>
+    </div>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-4 mb-4" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="row g-4">
+        <!-- Testimonials List -->
+        <div class="col-lg-8">
+            <h3 class="fw-bold mb-4 brand-font">Avis de nos utilisateurs</h3>
+
+            {% if testimonials %}
+            <div class="row g-4">
+                {% for testimonial in testimonials %}
+                <div class="col-12">
+                    <div class="testimonial-card bg-white p-4 rounded-4 shadow-sm border h-100">
+                        <div class="d-flex align-items-start gap-3 mb-3">
+                            <div class="rounded-circle avatar-premium text-white d-flex align-items-center justify-content-center"
+                                style="width: 50px; height: 50px; font-size: 1.25rem; font-weight: 800; flex-shrink: 0;">
+                                {{ testimonial.user.username|make_list|first|upper }}
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="fw-bold mb-1">{{
+                                    testimonial.user.get_full_name|default:testimonial.user.username }}</h5>
+                                <div class="stars mb-2">
+                                    {% for i in "12345" %}
+                                    {% if forloop.counter <= testimonial.rating %} <i class="fas fa-star text-warning">
+                                        </i>
+                                        {% else %}
+                                        <i class="far fa-star text-muted"></i>
+                                        {% endif %}
+                                        {% endfor %}
+                                </div>
+                                <small class="text-muted">{{ testimonial.created_at|date:"d F Y" }}</small>
+                            </div>
+                        </div>
+                        <p class="text-muted mb-0">{{ testimonial.content }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <div class="icon-circle mb-3 bg-primary-subtle text-primary mx-auto"
+                    style="width: 60px; height: 60px; font-size: 1.5rem;">💬</div>
+                <h5 class="text-muted">Aucun témoignage pour le moment</h5>
+                <p class="text-muted small">Soyez le premier à partager votre expérience !</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Submission Form -->
+        <div class="col-lg-4">
+            {% if user.is_authenticated %}
+            <div class="bg-white p-4 rounded-5 shadow-sm border sticky-top" style="top: 100px;">
+                <h4 class="fw-bold mb-4 brand-font">Laissez votre avis</h4>
+                <form method="post" action="{% url 'core:testimonials' %}">
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Votre note</label>
+                        <div class="star-rating-input mb-2">
+                            {% for i in "12345" %}
+                            <input type="radio" name="rating" id="star{{ i }}" value="{{ i }}" {% if forloop.counter==5
+                                %}checked{% endif %}>
+                            <label for="star{{ i }}" class="star-label">
+                                <i class="fas fa-star"></i>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        {{ form.content|as_crispy_field }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary-custom w-100 py-3 rounded-4">
+                        <i class="fas fa-paper-plane me-2"></i>Publier mon avis
+                    </button>
+                </form>
+            </div>
+            {% else %}
+            <div class="bg-white p-4 rounded-5 shadow-sm border text-center sticky-top" style="top: 100px;">
+                <div class="icon-circle mb-3 bg-primary-subtle text-primary mx-auto"
+                    style="width: 60px; height: 60px; font-size: 1.5rem;">🔒</div>
+                <h5 class="fw-bold mb-3">Connectez-vous pour laisser un avis</h5>
+                <p class="text-muted small mb-4">Partagez votre expérience avec la communauté EduQuiz AI</p>
+                <a href="{% url 'accounts:login' %}?next={{ request.path }}"
+                    class="btn btn-primary-custom w-100 rounded-pill">
+                    Se connecter
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Star Rating Input */
+    .star-rating-input {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        gap: 0.25rem;
+    }
+
+    .star-rating-input input[type="radio"] {
+        display: none;
+    }
+
+    .star-rating-input .star-label {
+        cursor: pointer;
+        font-size: 2rem;
+        color: #ddd;
+        transition: all 0.2s ease;
+    }
+
+    .star-rating-input .star-label:hover,
+    .star-rating-input .star-label:hover~.star-label,
+    .star-rating-input input[type="radio"]:checked~.star-label {
+        color: #ffc107;
+    }
+
+    .star-rating-input .star-label:hover {
+        transform: scale(1.2);
+    }
+
+    /* Testimonial Card */
+    .testimonial-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08) !important;
+    }
+</style>
+{% endblock %}

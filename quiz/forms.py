@@ -24,3 +24,10 @@ class QuizSetupForm(forms.Form):
         initial='Standard',
         widget=forms.Select(attrs={'class': 'form-select'})
     )
+    time_limit = forms.IntegerField(
+        label="Durée du quiz (minutes)",
+        initial=5,
+        min_value=1,
+        max_value=60,
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )

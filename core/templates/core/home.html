@@ -2,18 +2,44 @@
 
 {% block content %}
 <section class="hero animate-fade-in">
-    <h1>L'Excellence Académique <br>par l'Intelligence Artificielle</h1>
-    <p>Transformez vos supports de cours en quiz interactifs et synthèses claires. Une révision intelligente, rapide et
-        efficace.</p>
-    <div class="d-flex gap-3 justify-content-center">
-        <a href="{% url 'quiz:quiz_setup' %}"
-            class="btn btn-light btn-lg rounded-pill px-5 fw-bold text-primary shadow-lg">Lancer l'Application</a>
-        <a href="{% url 'core:about' %}"
-            class="btn btn-outline-light btn-lg rounded-pill px-5 fw-bold transition-hover">En savoir plus</a>
+    {% if user.is_authenticated %}
+    <div class="welcome-badge mb-4">
+        <span class="badge rounded-pill">Ravi de vous revoir, {{ user.username }} !</span>
     </div>
+    <h1 class="hero-title">Prêt pour votre prochaine <br class="d-none d-md-block">session de révision ?</h1>
+    <p class="hero-subtitle">Vos documents sont analysés en un clin d'œil. Choisissez votre prochaine étape.</p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+        <a href="{% url 'quiz:quiz_setup' %}"
+            class="btn btn-light btn-lg rounded-pill px-5 fw-bold text-primary shadow-lg transform-hover">
+            <i class="fas fa-plus-circle me-2"></i>Nouveau Quiz
+        </a>
+        <a href="{% url 'quiz:quiz_history' %}"
+            class="btn btn-outline-light btn-lg rounded-pill px-5 fw-bold transform-hover">
+            <i class="fas fa-history me-2"></i>Mon Historique
+        </a>
+    </div>
+    {% else %}
+    <div class="welcome-badge mb-3">
+        <span
+            class="badge rounded-pill bg-white-transparent text-white px-3 py-2 fw-medium border border-white-op-20">L'IA
+            au service de votre réussite</span>
+    </div>
+    <h1 class="display-3 fw-bold mb-4">L'Excellence Académique <br>par l'Intelligence Artificielle</h1>
+    <p class="lead mb-5 opacity-90 mx-auto" style="max-width: 700px;">Transformez vos supports de cours en outils de
+        révision puissants. Une maîtrise parfaite de vos sujets, en quelques clics.</p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+        <a href="{% url 'accounts:register' %}"
+            class="btn btn-light btn-lg rounded-pill px-5 fw-bold text-primary shadow-lg transform-hover">
+            Commencer l'aventure <i class="fas fa-arrow-right ms-2 small"></i>
+        </a>
+        <a href="{% url 'core:about' %}" class="btn btn-outline-light btn-lg rounded-pill px-5 fw-bold transform-hover">
+            Découvrir le projet
+        </a>
+    </div>
+    {% endif %}
 </section>
 
-<section class="mb-5 animate-fade-in" style="animation-delay: 0.2s;">
+<section id="features" class="mb-5 animate-fade-in" style="animation-delay: 0.2s;">
     <div class="text-center mb-5">
         <h2 class="display-6 fw-bold">Une Suite d'Outils Complète</h2>
         <p class="text-muted fs-5">Conçu pour les étudiants exigeants et les professionnels.</p>

@@ -7,10 +7,10 @@ Ce projet suit une méthodologie rigoureuse pour garantir sa qualité et sa modu
 1. **Cahier des charges** : [Consulter le document](./docs/Cahier_des_charges.md)
 2. **Environnement** : Utilisation de `virtualenv` et gestion stricte des dépendances via `requirements.txt`.
 3. **Développement Modulaire** :
-    - `src/pdf_processor.py` (Extraction)
-    - `src/quiz_generator.py` (Logique IA/NLP)
-    - `src/utils.py` (Utilitaires)
-4. **Interface** : Interface Web robuste via **Django** (v5.0+).
+    - `pdf_processor.py` (Extraction)
+    - `quiz_generator.py` (Logique IA/NLP)
+    - `eduquiz_project/` (Structure Django)
+4. **Interface** : Interface Web moderne et dynamique.
 5. **Documentation** : [Manuel Utilisateur](./docs/Manuel_Utilisateur.md)
 
 ## ✨ Fonctionnalités
@@ -44,6 +44,19 @@ python manage.py migrate
 ```
 
 ### 3. Lancement du serveur
+```bash
+# Créer la base de données dans PostgreSQL
+# Puis configurer le fichier .env avec vos credentials
+# Voir docs/Migration_PostgreSQL.md pour plus de détails
+
+# Vérifier la connexion
+python scripts/verify_database.py
+```
+
+**Option 2 : SQLite (Développement local)**
+L'application bascule automatiquement sur SQLite si PostgreSQL n'est pas configuré.
+
+### 4. Lancement
 ```bash
 python manage.py runserver
 ```

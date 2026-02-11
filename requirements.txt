@@ -11,3 +11,4 @@ plotly
 python-docx
 gTTS
 psycopg2-binary
+openai

@@ -6,10 +6,20 @@
         <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2 mb-3">Mode Évaluation</span>
         <h2 class="brand-font display-6">À vous de jouer !</h2>
         <p class="text-muted">Prenez le temps de bien lire chaque question.</p>
+
+        <!-- Timer Display -->
+        <div class="sticky-top pt-3" style="z-index: 1020;">
+            <div
+                class="d-inline-flex align-items-center gap-3 bg-white shadow-lg border border-primary-subtle rounded-pill px-4 py-2 animate-pulse-slow">
+                <span class="fs-4">⏱️</span>
+                <span id="timerDisplay" class="brand-font fs-4 text-primary fw-bold">00:00</span>
+            </div>
+        </div>
     </div>
 
-    <form method="post">
+    <form method="post" id="quizForm">
         {% csrf_token %}
+        <input type="hidden" name="time_elapsed" id="timeElapsedInput" value="00:00">
 
         {% for q in quiz_data %}
         <div class="card mb-4 border-0 shadow-sm rounded-4 overflow-hidden hover-shadow transition-all">
@@ -19,7 +29,7 @@
                         {{ forloop.counter }}</span>
                 </div>
 
-                <h5 class="card-title text-dark mb-4 fw-bold" style="font-size: 1.25rem;">{{ q.question }}</h5>
+                <h5 class="card-title text-dark mb-4 fw-bold" style="font-size: 1.25rem;">{{ q.text }}</h5>
 
                 <div class="d-flex flex-column gap-3">
                     {% for option in q.options %}
@@ -47,7 +57,67 @@
     </form>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const timeLimitMinutes = {{ quiz_obj.time_limit|default: 5
+    }};
+    let timeLeftSeconds = timeLimitMinutes * 60;
+    let timeElapsedSeconds = 0;
+
+    const timerDisplay = document.getElementById('timerDisplay');
+    const timeElapsedInput = document.getElementById('timeElapsedInput');
+    const quizForm = document.getElementById('quizForm');
+
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    const timerInterval = setInterval(function () {
+        timeLeftSeconds--;
+        timeElapsedSeconds++;
+
+        // Update display
+        timerDisplay.textContent = formatTime(timeLeftSeconds);
+        timeElapsedInput.value = formatTime(timeElapsedSeconds);
+
+        // Warning colors
+        if (timeLeftSeconds <= 60) {
+            timerDisplay.classList.remove('text-primary');
+            timerDisplay.classList.add('text-danger');
+        }
+
+        // Time's up
+        if (timeLeftSeconds <= 0) {
+            clearInterval(timerInterval);
+            alert("Temps écoulé ! Vos réponses vont être envoyées.");
+            quizForm.submit();
+        }
+    }, 1000);
+
+    // Initial display
+    timerDisplay.textContent = formatTime(timeLeftSeconds);
+    });
+</script>
+
 <style>
+    .animate-pulse-slow {
+        animation: pulse-slow 3s infinite;
+    }
+
+    @keyframes pulse-slow {
+
+        0%,
+        100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.02);
+        }
+    }
+
     /* Custom Radio Styles for this page */
     .option-label input:checked+div {
         border-color: var(--primary) !important;

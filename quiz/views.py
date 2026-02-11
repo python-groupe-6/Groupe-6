@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import QuizSetupForm
 from .services import QuizGeneratorService, PDFProcessor
-from .models import ScoreHistory
+from .models import ScoreHistory, Quiz, Question
 
 @login_required
 def quiz_setup(request):
@@ -25,12 +25,26 @@ def quiz_setup(request):
             
             quiz_data = service.generate_quiz(text, num_questions, difficulty)
             
-            # 3. Store in Session
-            request.session['quiz_data'] = quiz_data
-            request.session['quiz_config'] = {
-                'num_questions': num_questions,
-                'difficulty': difficulty
-            }
+            # 3. Create Quiz in Database
+            quiz_obj = Quiz.objects.create(
+                user=request.user,
+                title=f"Quiz sur {pdf_file.name}",
+                difficulty=difficulty,
+                time_limit=form.cleaned_data['time_limit']
+            )
+            
+            # 4. Create Questions in Database
+            for q in quiz_data:
+                Question.objects.create(
+                    quiz=quiz_obj,
+                    text=q['question'],
+                    options=q['options'],
+                    correct_answer=q['answer'],
+                    explanation=q.get('explanation', '')
+                )
+            
+            # 5. Store Quiz ID in Session
+            request.session['quiz_id'] = quiz_obj.id
             
             return redirect('quiz:quiz_take')
 
@@ -41,50 +55,61 @@ def quiz_setup(request):
 
 @login_required
 def quiz_take(request):
-    quiz_data = request.session.get('quiz_data')
-    if not quiz_data:
+    quiz_id = request.session.get('quiz_id')
+    if not quiz_id:
         return redirect('quiz:quiz_setup')
+
+    try:
+        quiz_obj = Quiz.objects.get(id=quiz_id)
+    except Quiz.DoesNotExist:
+        return redirect('quiz:quiz_setup')
+
+    questions = quiz_obj.questions.all()
 
     if request.method == 'POST':
         score = 0
         results = []
         
-        for i, question in enumerate(quiz_data):
+        for i, question in enumerate(questions):
             user_answer = request.POST.get(f'question_{i}')
-            correct_answer = question['answer']
+            correct_answer = question.correct_answer
             is_correct = user_answer == correct_answer
             if is_correct:
                 score += 1
             
             results.append({
-                'question': question['question'],
+                'question': question.text,
                 'user_answer': user_answer,
                 'correct_answer': correct_answer,
                 'is_correct': is_correct,
-                'explanation': question.get('explanation', '')
+                'explanation': question.explanation
             })
 
         # Save Score
-        config = request.session.get('quiz_config', {})
+        time_elapsed = request.POST.get('time_elapsed', 'N/A')
         ScoreHistory.objects.create(
             user=request.user,
+            quiz=quiz_obj,
             score=score,
-            total_questions=len(quiz_data),
-            difficulty=config.get('difficulty', 'Standard'),
-            time_elapsed="N/A" # To implement timer later
+            total_questions=questions.count(),
+            difficulty=quiz_obj.difficulty,
+            time_elapsed=time_elapsed
         )
         
         # Clear session
-        del request.session['quiz_data']
+        del request.session['quiz_id']
         
         # Pass full results to template
         return render(request, 'quiz/quiz_result.html', {
             'score': score,
-            'total': len(quiz_data),
+            'total': questions.count(),
             'results': results
         })
 
-    return render(request, 'quiz/quiz_take.html', {'quiz_data': quiz_data})
+    return render(request, 'quiz/quiz_take.html', {
+        'quiz_data': questions,
+        'quiz_obj': quiz_obj
+    })
 
 @login_required
 def quiz_history(request):

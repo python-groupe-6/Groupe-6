@@ -83,7 +83,8 @@
                         </div>
                     </div>
 
-                    <h5 class="fw-bold mb-3">{% trans "Quiz sur Document" %}</h5>
+                    <h5 class="fw-bold mb-3">{% if item.quiz %}{{ item.quiz.title }}{% else %}{% trans "Quiz sur
+                        Document" %}{% endif %}</h5>
 
                     <div class="metadata-row d-flex flex-wrap gap-3 mb-4">
                         <div class="meta-item">

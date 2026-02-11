@@ -54,8 +54,13 @@
                 class="nav-link px-2 {% if request.resolver_match.url_name == 'quiz_setup' or request.resolver_match.url_name == 'quiz_take' %}active{% endif %}">
                 {% trans "Nouveau Quiz" %}
             </a>
-            <a href="{% url 'quiz:quiz_history' %}" class="nav-link px-2">
+            <a href="{% url 'quiz:quiz_history' %}"
+                class="nav-link px-2 {% if request.resolver_match.url_name == 'quiz_history' %}active{% endif %}">
                 {% trans "Historique" %}
+            </a>
+            <a href="{% url 'core:contact' %}"
+                class="nav-link px-2 {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+                {% trans "Contactez-nous" %}
             </a>
             {% endif %}
         </div>
@@ -239,10 +244,9 @@
                 <div class="footer-section">
                     <h5 class="footer-heading">Produit</h5>
                     <ul class="footer-links">
-                        <li><a href="#" class="footer-link">Fonctionnalités</a></li>
-                        <li><a href="#" class="footer-link">Tarification</a></li>
-                        <li><a href="#" class="footer-link">Témoignages</a></li>
-                        <li><a href="#" class="footer-link">API</a></li>
+                        <li><a href="{% url 'core:home' %}#features" class="footer-link">Fonctionnalités</a></li>
+                        <li><a href="{% url 'accounts:subscription' %}" class="footer-link">Tarification</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="footer-link">Support Technique</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -258,7 +262,7 @@
                     <ul class="footer-links">
                         <li><a href="{% url 'core:about' %}" class="footer-link">Centre d'aide</a></li>
                         <li><a href="{% url 'core:contact' %}" class="footer-link">Contact</a></li>
-                        <li><a href="#" class="footer-link">Status</a></li>
+                        <li><a href="{% url 'core:home' %}" class="footer-link">Status</a></li>
                     </ul>
                 </div>
             </div>
