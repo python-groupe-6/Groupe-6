@@ -1,10 +1,53 @@
+# Environment Variables - NEVER COMMIT
 .venv/
+.env
+.env.local
+.env.*.local
 __pycache__/
 *.log
 db.sqlite3
-.env
 static/
 media/
 *.pyc
 .vscode/
 .idea/
+
+# Python build & distribution
+build/
+dist/
+*.egg-info/
+*.egg
+.Python
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Secrets & Keys
+secrets.json
+credentials.json
+*.pem
+*.key
+*.pub
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Streamlit
+.streamlit/
+.streamlit_cache/
+
+# Logs & temp files
+*.log
+logs/
+tmp/
+temp/

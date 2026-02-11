@@ -1,50 +1,265 @@
-{% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
 
-{% block content %}
-<div class="container animate-fade-in">
-    <div class="auth-card mx-auto">
-        <div class="text-center mb-1">
-            <h2 class="brand-font h5 text-primary mb-0">Créer un compte</h2>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - EduQuiz AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link href="{% static 'css/auth.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo-section">
+            <a href="{% url 'core:home' %}" class="nav-brand d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                    class="text-primary">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#logo-gradient)" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M2 17L12 22L22 17" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                    <path d="M2 12L12 17L22 12" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                    <defs>
+                        <linearGradient id="logo-gradient" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#4F46E5"></stop>
+                            <stop offset="1" stop-color="#7C3AED"></stop>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                EduQuiz AI
+            </a>
         </div>
 
-        <form method="post" class="needs-validation" novalidate>
-            {% csrf_token %}
-            <div class="row g-1">
-                <div class="col-6">
-                    {{ form.first_name|as_crispy_field }}
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">Créer un compte</h1>
+                <p class="card-subtitle">Rejoignez notre plateforme et commencez à créer des quiz personnalisés</p>
+            </div>
+
+            <!-- Django Messages -->
+            {% if messages %}
+            {% for message in messages %}
+            <div class="success-message show {% if message.tags == 'error' %}error{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <a href="{% url 'core:home' %}" class="close-btn" aria-label="Fermer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </a>
+
+            <form id="registerForm" method="post" action="{% url 'accounts:register' %}">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="prenom">Prénom <span class="required">*</span></label>
+                        <input type="text" id="prenom" name="first_name" placeholder="Jean" required>
+                        <div class="error-message" id="prenomError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nom">Nom <span class="required">*</span></label>
+                        <input type="text" id="nom" name="last_name" placeholder="Dupont" required>
+                        <div class="error-message" id="nomError"></div>
+                    </div>
                 </div>
-                <div class="col-6">
-                    {{ form.last_name|as_crispy_field }}
+
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur <span class="required">*</span></label>
+                    <input type="text" id="username" name="username" placeholder="jeandupont" required>
+                    <div class="error-message" id="usernameError"></div>
                 </div>
-            </div>
-            {{ form.username|as_crispy_field }}
-            {{ form.email|as_crispy_field }}
-            {{ form.password1|as_crispy_field }}
-            {{ form.password2|as_crispy_field }}
 
-            <div class="form-check mt-2 mb-2">
-                <input class="form-check-input" type="checkbox" id="terms" required checked>
-                <label class="form-check-label text-muted" style="font-size: 0.75rem;" for="terms">
-                    J'accepte les <a href="#" class="text-primary text-decoration-none">Conditions</a>.
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="email">Email <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="jean.dupont@exemple.com" required>
+                    <div class="error-message" id="emailError"></div>
+                </div>
 
-            <div class="d-grid">
-                <button type="submit"
-                    class="btn btn-primary-custom btn-md shadow-lg position-relative overflow-hidden group">
-                    <span class="position-relative z-1" style="font-size: 0.9rem;">S'inscrire</span>
-                </button>
-            </div>
-        </form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Mot de passe <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" name="password1" placeholder="••••••••" required>
+                            <button type="button" class="password-toggle" id="togglePassword">
+                                <svg class="eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="error-message" id="passwordError"></div>
+                    </div>
 
-        <div class="text-center mt-2 pt-1 border-top border-light">
-            <p class="text-muted mb-0" style="font-size: 0.75rem;">
-                Déjà un compte ?
-                <a href="{% url 'accounts:login' %}" class="text-primary fw-bold text-decoration-none ms-1">Se
-                    connecter</a>
-            </p>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirmer <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <input type="password" id="confirmPassword" name="password2" placeholder="••••••••"
+                                required>
+                            <button type="button" class="password-toggle" id="toggleConfirmPassword">
+                                <svg class="eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="error-message" id="confirmPasswordError"></div>
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="conditions" name="conditions" required>
+                    </div>
+                    <label for="conditions" class="checkbox-label">
+                        J'accepte les <a href="/conditions">Thèmes de Politique</a> et de <a
+                            href="/confidentialite">Confidentialité</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn">S'inscrire</button>
+
+                <div class="divider">
+                    <span class="login-link">Déjà un compte ? <a href="{% url 'accounts:login' %}">Se
+                            connecter</a></span>
+                </div>
+            </form>
+        </div>
+
+        <div class="footer">
+            <div class="footer-links">
+                <span>© 2026 EduQuiz AI. Tous droits réservés</span>
+                <span class="dot">&bull;</span>
+                <a href="/confidentialite">Confidentialité</a>
+                <span class="dot">&bull;</span>
+                <a href="{% url 'core:help' %}">Aide</a>
+            </div>
         </div>
     </div>
-</div>
-{% endblock %}
+
+    <script>
+        // Password toggle functionality
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const confirmPassword = document.getElementById('confirmPassword');
+
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+        });
+
+        toggleConfirmPassword.addEventListener('click', function () {
+            const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPassword.setAttribute('type', type);
+        });
+
+        // Form validation and submission
+        const form = document.getElementById('registerForm');
+
+        form.addEventListener('submit', function (e) {
+            // Validate client-side first
+            let isValid = true;
+
+            // Clear previous errors
+            document.querySelectorAll('.error-message').forEach(msg => {
+                msg.classList.remove('show');
+                msg.textContent = '';
+            });
+
+            // Validate first name
+            const prenom = document.getElementById('prenom').value.trim();
+            if (prenom.length < 2) {
+                showError('prenomError', 'Le prénom doit contenir au moins 2 caractères');
+                isValid = false;
+            }
+
+            // Validate last name
+            const nom = document.getElementById('nom').value.trim();
+            if (nom.length < 2) {
+                showError('nomError', 'Le nom doit contenir au moins 2 caractères');
+                isValid = false;
+            }
+
+            // Validate username
+            const username = document.getElementById('username').value.trim();
+            if (username.length < 3) {
+                showError('usernameError', 'Le nom d\'utilisateur doit contenir au moins 3 caractères');
+                isValid = false;
+            }
+
+            // Validate email
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('emailError', 'Veuillez entrer une adresse email valide');
+                isValid = false;
+            }
+
+            // Validate password (robustness check)
+            const passwordValue = password.value;
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+            if (!passwordRegex.test(passwordValue)) {
+                showError('passwordError', 'Le mot de passe doit contenir au moins 8 caractères, avec des majuscules, des minuscules et des chiffres');
+                isValid = false;
+            }
+
+            // Validate password confirmation
+            const confirmPasswordValue = confirmPassword.value;
+            if (passwordValue !== confirmPasswordValue) {
+                showError('confirmPasswordError', 'Les mots de passe ne correspondent pas');
+                isValid = false;
+            }
+
+            // Validate conditions checkbox
+            const conditions = document.getElementById('conditions');
+            if (!conditions.checked) {
+                alert('Veuillez accepter les Thèmes de Politique et de Confidentialité');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                e.preventDefault(); // Prevent submission if invalid
+            }
+            // If valid, let the form submit naturally to Django
+        });
+
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+
+        // Real-time validation feedback
+        const inputs = document.querySelectorAll('input[required]');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function () {
+                if (this.value.trim() === '') {
+                    this.style.borderColor = 'var(--error)';
+                } else {
+                    this.style.borderColor = 'var(--border)';
+                }
+            });
+
+            input.addEventListener('focus', function () {
+                this.style.borderColor = 'var(--primary)';
+            });
+        });
+    </script>
+</body>
+
+</html>

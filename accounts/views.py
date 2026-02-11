@@ -107,3 +107,108 @@ def settings_view(request):
 @login_required
 def subscription_view(request):
     return render(request, 'accounts/subscription.html')
+
+# SPA Password Reset Views
+import json
+import random
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.views.decorators.csrf import ensure_csrf_cookie
+
+@ensure_csrf_cookie
+def password_reset_spa(request):
+    return render(request, 'registration/password_reset_spa.html')
+
+@require_POST
+def send_reset_code(request):
+    try:
+        data = json.loads(request.body)
+        email = data.get('email')
+        
+        if not email:
+            return JsonResponse({'success': False, 'message': 'Email manquant'}, status=400)
+            
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            # Pour la sécurité, on ne dit pas si l'email n'existe pas, mais on fait semblant
+            # Cela évite le "User Enumeration"
+            # Cependant, pour ce design spécifique, si on veut une UX fluide...
+            # On va simuler un succès mais ne rien envoyer.
+            # OU on renvoie une erreur si c'est ce que veut le client (moins sécure)
+            # Le client veut que ça marche. On va renvoyer success.
+            return JsonResponse({'success': True})
+
+        # Générer le code
+        code = str(random.randint(100000, 999999))
+        
+        # Stocker en session
+        request.session['reset_code'] = code
+        request.session['reset_email'] = email
+        request.session['reset_verified'] = False
+        request.session.save() # Forcer la sauvegarde
+        
+        # Envoyer l'email
+        send_mail(
+            'Votre code de réinitialisation EduQuiz AI',
+            f'Votre code de vérification est : {code}',
+            'noreply@eduquiz.ai',
+            [email],
+            fail_silently=False,
+        )
+        
+        return JsonResponse({'success': True})
+        
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)}, status=500)
+
+@require_POST
+def verify_reset_code(request):
+    try:
+        data = json.loads(request.body)
+        code = data.get('code')
+        
+        session_code = request.session.get('reset_code')
+        
+        if not session_code:
+             return JsonResponse({'success': False, 'message': 'Session expirée'}, status=400)
+             
+        if code == session_code:
+            request.session['reset_verified'] = True
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'message': 'Code incorrect'}, status=400)
+            
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)}, status=500)
+
+@require_POST
+def reset_password_action(request):
+    try:
+        data = json.loads(request.body)
+        new_password = data.get('password')
+        
+        if not request.session.get('reset_verified'):
+            return JsonResponse({'success': False, 'message': 'Vérification requise'}, status=403)
+            
+        email = request.session.get('reset_email')
+        try:
+            user = User.objects.get(email=email)
+            user.set_password(new_password)
+            user.save()
+            
+            # Update session auth hash? No, user needs to login again usually.
+            # But let's clean the session
+            del request.session['reset_code']
+            del request.session['reset_email']
+            del request.session['reset_verified']
+            
+            return JsonResponse({'success': True})
+            
+        except User.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Utilisateur introuvable'}, status=404)
+            
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)}, status=500)

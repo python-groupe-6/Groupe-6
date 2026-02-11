@@ -1,44 +1,156 @@
-{% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
 
-{% block content %}
-<div class="container animate-fade-in">
-    <div class="auth-card mx-auto">
-        <div class="text-center mb-3">
-            <div class="icon-circle mb-2" style="width: 48px; height: 48px; font-size: 1.25rem;">👋</div>
-            <h2 class="brand-font h5 text-primary">Bon retour parmi nous</h2>
-            <p class="text-muted small">Connectez-vous pour continuer.</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - EduQuiz AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link href="{% static 'css/auth.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo-section">
+            <a href="{% url 'core:home' %}" class="nav-brand d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                    class="text-primary">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#logo-gradient)" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M2 17L12 22L22 17" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                    <path d="M2 12L12 17L22 12" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                    <defs>
+                        <linearGradient id="logo-gradient" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#4F46E5"></stop>
+                            <stop offset="1" stop-color="#7C3AED"></stop>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                EduQuiz AI
+            </a>
         </div>
 
-        <form method="post" class="needs-validation" novalidate>
-            {% csrf_token %}
-            {{ form|crispy }}
+        <div class="card login-card">
+            <div class="card-header">
+                <h1 class="card-title">Bon retour</h1>
+                <p class="card-subtitle">Connectez-vous à votre espace EduQuiz AI</p>
+            </div>
 
-            <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="rememberMe">
-                    <label class="form-check-label text-muted small user-select-none" for="rememberMe">
-                        Rester connecté
-                    </label>
+            <!-- Django Messages -->
+            {% if messages %}
+            {% for message in messages %}
+            <div class="success-message show {% if message.tags == 'error' %}error{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <!-- Form Errors (Non-field) -->
+            {% if form.non_field_errors %}
+            <div class="error-message show">
+                {% for error in form.non_field_errors %}
+                {{ error }}<br>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <a href="{% url 'core:home' %}" class="close-btn" aria-label="Fermer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </a>
+
+            <form method="post" action="{% url 'accounts:login' %}" id="loginForm">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" name="username" placeholder="Votre nom d'utilisateur" required
+                        autofocus>
                 </div>
-                <a href="#" class="text-primary text-decoration-none small fw-semibold">Mot de passe oublié ?</a>
-            </div>
 
-            <div class="d-grid gap-2">
-                <button type="submit"
-                    class="btn btn-primary-custom btn-lg shadow-lg position-relative overflow-hidden group">
-                    <span class="position-relative z-1">Se connecter</span>
-                </button>
-            </div>
-        </form>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
+                        <button type="button" class="password-toggle" id="togglePassword">
+                            <svg class="eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
 
-        <div class="text-center mt-4 pt-2 border-top border-light">
-            <p class="text-muted small mb-0">
-                Pas de compte ?
-                <a href="{% url 'accounts:register' %}" class="text-primary fw-bold text-decoration-none ms-1">Créer un
-                    compte</a>
-            </p>
+                <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.5rem;">
+                    <a href="{% url 'accounts:password_reset' %}" class="login-link"
+                        style="color: var(--primary); font-weight: 500; font-size: 0.875rem;">Mot de passe oublié ?</a>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">Se connecter</button>
+
+                <div class="divider">
+                    <span class="login-link">Pas encore de compte ? <a href="{% url 'accounts:register' %}">Créer un
+                            compte</a></span>
+                </div>
+            </form>
+        </div>
+
+        <div class="footer">
+            <div class="footer-links">
+                <span>© 2026 EduQuiz AI</span>
+                <a href="/confidentialite">Confidentialité</a>
+                <a href="{% url 'core:help' %}">Aide</a>
+            </div>
         </div>
     </div>
-</div>
-{% endblock %}
+
+    <script>
+        // Password toggle functionality
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+
+        if (togglePassword && password) {
+            togglePassword.addEventListener('click', function () {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+            });
+        }
+
+        // Real-time validation feedback (visual only)
+        const inputs = document.querySelectorAll('input[required]');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function () {
+                if (this.value.trim() === '') {
+                    this.style.borderColor = 'var(--error)';
+                } else {
+                    this.style.borderColor = 'var(--border)';
+                }
+            });
+
+            input.addEventListener('focus', function () {
+                this.style.borderColor = 'var(--primary)';
+            });
+        });
+
+        // Simple client-side check before submit (optional, Django handles auth)
+        const form = document.getElementById('loginForm');
+        form.addEventListener('submit', function (e) {
+            const btn = document.getElementById('submitBtn');
+            // Add loading state if desired
+            // btn.innerHTML = 'Connexion...';
+            // btn.disabled = true;
+        });
+    </script>
+</body>
+
+</html>

@@ -50,3 +50,6 @@ def testimonials(request):
     }
     return render(request, 'core/testimonials.html', context)
 
+def help_page(request):
+    return render(request, 'core/help.html')
+
