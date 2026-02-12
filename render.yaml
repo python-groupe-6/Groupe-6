@@ -8,7 +8,7 @@ services:
     startCommand: "gunicorn eduquiz_project.wsgi:application"
     envVars:
       - key: PYTHON_VERSION
-        value: "3.11"
+        value: "3.11.10"
       - key: DEBUG
         value: "False"
       - key: DJANGO_SETTINGS_MODULE
