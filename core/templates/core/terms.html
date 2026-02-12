@@ -1,10 +1,308 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Conditions d'utilisation - EduQuiz AI{% endblock %}
+{% block title %}Thèmes de Politique - EduQuiz AI{% endblock %}
 
 {% block extra_css %}
 <link href="{% static 'css/legal.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
+<div class="container py-5">
+    <div class="legal-container">
+        <div class="legal-header text-center mb-5">
+            <h1 class="legal-title">Thèmes de Politique</h1>
+            <p class="legal-subtitle">Conditions Générales d'Utilisation</p>
+            <p class="text-muted small">Dernière mise à jour : 12 février 2026</p>
+        </div>
+
+        <div class="legal-content">
+            <!-- Section 1: Acceptation des Conditions -->
+            <section class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-check-circle text-primary me-2"></i>
+                    1. Acceptation des Conditions
+                </h2>
+                <div class="section-content">
+                    <p>
+                        En accédant et en utilisant la plateforme EduQuiz AI (ci-après "la Plateforme"), vous acceptez
+                        d'être lié par les présentes Conditions Générales d'Utilisation. Si vous n'acceptez pas ces
+                        conditions dans leur intégralité, veuillez ne pas utiliser nos services.
+                    </p>
+                    <p>
+                        Ces conditions constituent un accord juridiquement contraignant entre vous (l'utilisateur) et
+                        EduQuiz AI. Nous nous réservons le droit de modifier ces conditions à tout moment. Les
+                        modifications entreront en vigueur dès leur publication sur la Plateforme.
+                    </p>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Important :</strong> Il est de votre responsabilité de consulter régulièrement ces
+                        conditions pour rester informé des éventuelles modifications.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Description du Service -->
+            <section class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-graduation-cap text-primary me-2"></i>
+                    2. Description du Service
+                </h2>
+                <div class="section-content">
+                    <p>
+                        EduQuiz AI est une plateforme éducative intelligente qui utilise l'intelligence artificielle
+                        pour transformer vos documents en outils de révision interactifs. Nos services incluent :
+                    </p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check text-success me-2"></i>Génération automatique de quiz à partir de
+                            documents PDF, DOCX et TXT</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Création de flashcards personnalisées</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Analyse de performance et suivi de progression
+                        </li>
+                        <li><i class="fas fa-check text-success me-2"></i>Synthèse intelligente de contenu éducatif</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Rapports détaillés de résultats</li>
+                    </ul>
+                    <p>
+                        La Plateforme utilise des technologies d'intelligence artificielle avancées, notamment Google
+                        Gemini, pour analyser et générer du contenu éducatif de qualité.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 3: Utilisation du Service -->
+            <section class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-user-shield text-primary me-2"></i>
+                    3. Utilisation du Service
+                </h2>
+                <div class="section-content">
+                    <h3 class="subsection-title">3.1 Compte Utilisateur</h3>
+                    <p>
+                        Pour accéder à certaines fonctionnalités de la Plateforme, vous devez créer un compte. Vous
+                        vous engagez à :
+                    </p>
+                    <ul>
+                        <li>Fournir des informations exactes, complètes et à jour</li>
+                        <li>Maintenir la sécurité de votre mot de passe</li>
+                        <li>Nous informer immédiatement de toute utilisation non autorisée de votre compte</li>
+                        <li>Être responsable de toutes les activités effectuées sous votre compte</li>
+                    </ul>
+
+                    <h3 class="subsection-title">3.2 Utilisation Acceptable</h3>
+                    <p>Vous acceptez de ne pas :</p>
+                    <ul>
+                        <li>Utiliser la Plateforme à des fins illégales ou non autorisées</li>
+                        <li>Télécharger du contenu protégé par des droits d'auteur sans autorisation</li>
+                        <li>Tenter d'accéder de manière non autorisée à nos systèmes ou réseaux</li>
+                        <li>Utiliser des robots, scripts ou autres moyens automatisés pour accéder à la Plateforme</li>
+                        <li>Perturber ou interférer avec le fonctionnement de la Plateforme</li>
+                        <li>Partager votre compte avec des tiers</li>
+                    </ul>
+
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Attention :</strong> Toute violation de ces règles peut entraîner la suspension ou
+                        la résiliation immédiate de votre compte sans préavis.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Propriété Intellectuelle -->
+            <section class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-copyright text-primary me-2"></i>
+                    4. Propriété Intellectuelle
+                </h2>
+                <div class="section-content">
+                    <h3 class="subsection-title">4.1 Droits d'EduQuiz AI</h3>
+                    <p>
+                        Tous les droits de propriété intellectuelle relatifs à la Plateforme, y compris mais sans s'y
+                        limiter, le code source, les algorithmes, les designs, les logos, les marques et le contenu
+                        généré par notre IA, sont la propriété exclusive d'EduQuiz AI ou de ses concédants de licence.
+                    </p>
+
+                    <h3 class="subsection-title">4.2 Contenu Utilisateur</h3>
+                    <p>
+                        Vous conservez tous les droits sur les documents que vous téléchargez sur la Plateforme.
+                        Cependant, en téléchargeant du contenu, vous nous accordez une licence mondiale, non exclusive,
+                        libre de redevances pour :
+                    </p>
+                    <ul>
+                        <li>Traiter et analyser vos documents pour générer des quiz et du contenu éducatif</li>
+                        <li>Stocker temporairement vos documents sur nos serveurs sécurisés</li>
+                        <li>Améliorer nos algorithmes d'intelligence artificielle (de manière anonymisée)</li>
+                    </ul>
+
+                    <h3 class="subsection-title">4.3 Contenu Généré</h3>
+                    <p>
+                        Les quiz, flashcards et autres contenus générés par notre IA à partir de vos documents vous
+                        appartiennent. Vous êtes libre de les utiliser, les télécharger et les partager comme bon vous
+                        semble.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 5: Limitation de Responsabilité -->
+            <section class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-shield-alt text-primary me-2"></i>
+                    5. Limitation de Responsabilité
+                </h2>
+                <div class="section-content">
+                    <h3 class="subsection-title">5.1 Service "Tel Quel"</h3>
+                    <p>
+                        La Plateforme est fournie "en l'état" et "selon disponibilité". Nous ne garantissons pas que :
+                    </p>
+                    <ul>
+                        <li>Le service sera ininterrompu, sécurisé ou exempt d'erreurs</li>
+                        <li>Les résultats obtenus seront exacts ou fiables</li>
+                        <li>La qualité du contenu généré répondra à vos attentes</li>
+                        <li>Tous les bugs ou défauts seront corrigés</li>
+                    </ul>
+
+                    <h3 class="subsection-title">5.2 Exclusion de Garanties</h3>
+                    <p>
+                        Dans toute la mesure permise par la loi applicable, nous excluons toutes les garanties,
+                        expresses ou implicites, y compris les garanties de qualité marchande, d'adéquation à un usage
+                        particulier et de non-contrefaçon.
+                    </p>
+
+                    <h3 class="subsection-title">5.3 Limitation des Dommages</h3>
+                    <p>
+                        En aucun cas, EduQuiz AI, ses dirigeants, employés ou partenaires ne seront responsables de
+                        tout dommage indirect, accessoire, spécial, consécutif ou punitif, y compris la perte de
+                        profits, de données ou d'autres pertes intangibles, résultant de :
+                    </p>
+                    <ul>
+                        <li>Votre utilisation ou incapacité à utiliser la Plateforme</li>
+                        <li>Tout accès non autorisé à vos données</li>
+                        <li>Toute erreur ou omission dans le contenu généré</li>
+                        <li>Toute interruption ou cessation du service</li>
+                    </ul>
+
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        <strong>Important :</strong> Notre responsabilité totale envers vous pour toute réclamation
+                        ne dépassera pas le montant que vous avez payé pour utiliser nos services au cours des
+                        12 derniers mois.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: Résiliation -->
+            <section class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-times-circle text-primary me-2"></i>
+                    6. Résiliation
+                </h2>
+                <div class="section-content">
+                    <p>
+                        Nous nous réservons le droit de suspendre ou de résilier votre accès à la Plateforme à tout
+                        moment, sans préavis, pour quelque raison que ce soit, notamment en cas de violation de ces
+                        conditions.
+                    </p>
+                    <p>
+                        Vous pouvez résilier votre compte à tout moment en nous contactant à l'adresse
+                        <a href="mailto:contacteduquizai@gmail.com">contacteduquizai@gmail.com</a>. Après la
+                        résiliation, vous perdrez l'accès à votre compte et à toutes les données associées.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 7: Modifications du Service -->
+            <section class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-sync-alt text-primary me-2"></i>
+                    7. Modifications du Service
+                </h2>
+                <div class="section-content">
+                    <p>
+                        Nous nous réservons le droit de modifier, suspendre ou interrompre tout ou partie de la
+                        Plateforme à tout moment, avec ou sans préavis. Nous ne serons pas responsables envers vous
+                        ou tout tiers pour toute modification, suspension ou interruption du service.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 8: Loi Applicable -->
+            <section class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-gavel text-primary me-2"></i>
+                    8. Loi Applicable et Juridiction
+                </h2>
+                <div class="section-content">
+                    <p>
+                        Les présentes conditions sont régies et interprétées conformément aux lois françaises. Tout
+                        litige découlant de ou en relation avec ces conditions sera soumis à la juridiction exclusive
+                        des tribunaux français.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 9: Contact -->
+            <section class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-envelope text-primary me-2"></i>
+                    9. Contact
+                </h2>
+                <div class="section-content">
+                    <p>
+                        Pour toute question concernant ces Conditions Générales d'Utilisation, veuillez nous contacter :
+                    </p>
+                    <div class="contact-info">
+                        <p><strong>Email :</strong> <a
+                                href="mailto:contacteduquizai@gmail.com">contacteduquizai@gmail.com</a></p>
+                        <p><strong>Plateforme :</strong> EduQuiz AI</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 10: Dispositions Générales -->
+            <section class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-file-contract text-primary me-2"></i>
+                    10. Dispositions Générales
+                </h2>
+                <div class="section-content">
+                    <h3 class="subsection-title">10.1 Intégralité de l'Accord</h3>
+                    <p>
+                        Ces conditions constituent l'intégralité de l'accord entre vous et EduQuiz AI concernant
+                        l'utilisation de la Plateforme et remplacent tous les accords antérieurs.
+                    </p>
+
+                    <h3 class="subsection-title">10.2 Divisibilité</h3>
+                    <p>
+                        Si une disposition de ces conditions est jugée invalide ou inapplicable, les autres
+                        dispositions resteront pleinement en vigueur.
+                    </p>
+
+                    <h3 class="subsection-title">10.3 Renonciation</h3>
+                    <p>
+                        Le fait de ne pas exercer ou faire valoir un droit ou une disposition de ces conditions ne
+                        constitue pas une renonciation à ce droit ou à cette disposition.
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Bouton de retour -->
+        <div class="text-center my-5">
+            <a href="{% url 'accounts:register' %}" class="btn btn-lg btn-primary px-5 py-3"
+                style="border-radius: 50px; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3); transition: all 0.3s ease;">
+                <i class="fas fa-arrow-left me-2"></i>
+                Retour à la session d'inscription
+            </a>
+        </div>
+
+        <div class="legal-footer text-center mt-5">
+            <p class="text-muted">
+                <i class="fas fa-calendar-alt me-2"></i>
+                Date d'entrée en vigueur : 12 février 2026
+            </p>
+            <p class="text-muted small">
+                © 2026 EduQuiz AI. Tous droits réservés.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

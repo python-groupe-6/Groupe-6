@@ -53,9 +53,13 @@ Vérifie que `.env` est dans `.gitignore`:
 
 ```bash
 git add .
-git commit -m "Initial commit: EduQuiz AI Streamlit"
+git commit -m "Initial commit: EduQuiz AI"
 git push origin main
 ```
+
+git add .
+git commit -m "Ajout des modifications sur les thèmes de sécurité"
+git push origin main
 
 ### 2.3 Déploie sur Render
 
