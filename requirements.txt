@@ -2,9 +2,7 @@ django>=5.0
 django-crispy-forms
 crispy-bootstrap5
 pypdf
-spacy
 python-dotenv
-pandas
 fpdf2
 google-generativeai
 plotly
