@@ -31,4 +31,4 @@ Bienvenue dans **EduQuiz AI**, votre assistant intelligent pour la création de 
 - **Réinitialisation** : Utilisez le bouton **"Réinitialiser"** dans la barre latérale pour effacer la session en cours et commencer un nouveau document.
 
 ## 4. Support et Contact
-En cas de problème technique, contactez l'équipe support à : `support@eduquiz.ai`
+En cas de problème technique, contactez l'équipe support à : `contacteduquizai@gmail.com`
