@@ -53,7 +53,7 @@ Vérifie que `.env` est dans `.gitignore`:
 
 ```bash
 git add .
-git commit -m "Ajout de l'image de l'utilisateur"
+git commit -m "Ajout des modifications sur la clé"
 git push origin main
 ```
 
