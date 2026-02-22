@@ -53,7 +53,7 @@ Vérifie que `.env` est dans `.gitignore`:
 
 ```bash
 git add .
-git commit -m "Initial commit: EduQuiz AI"
+git commit -m "Ajout de l'image de l'utilisateur"
 git push origin main
 ```
 

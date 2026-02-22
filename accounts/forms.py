@@ -30,6 +30,11 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name', 'email']
 
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['avatar']
+
 class SettingsUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile

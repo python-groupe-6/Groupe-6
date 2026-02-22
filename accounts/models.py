@@ -7,6 +7,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     dark_mode = models.BooleanField(default=False)
     language = models.CharField(max_length=10, default='fr', choices=[('fr', 'Français'), ('en', 'English')])
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
     def __str__(self):
         return f"Profil de {self.user.username}"

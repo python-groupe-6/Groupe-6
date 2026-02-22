@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import SignUpForm, UserUpdateForm, SettingsUpdateForm
+from .forms import SignUpForm, UserUpdateForm, SettingsUpdateForm, ProfileUpdateForm
 from django.utils import translation
 from django.conf import settings
 
@@ -51,14 +51,22 @@ def dashboard_view(request):
 @login_required
 def profile_view(request):
     if request.method == 'POST':
-        form = UserUpdateForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
             messages.success(request, "Votre profil a été mis à jour avec succès !")
             return redirect('accounts:profile')
     else:
-        form = UserUpdateForm(instance=request.user)
-    return render(request, 'accounts/profile.html', {'form': form})
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+    
+    context = {
+        'form': u_form,
+        'p_form': p_form
+    }
+    return render(request, 'accounts/profile.html', context)
 
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm

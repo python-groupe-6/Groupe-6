@@ -73,8 +73,15 @@
                     class="btn btn-light rounded-pill dropdown-toggle d-flex align-items-center gap-2 border shadow-sm"
                     type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span
-                        class="rounded-circle bg-primary-subtle text-primary fw-bold d-flex align-items-center justify-content-center border border-primary-subtle"
-                        style="width: 36px; height: 36px;">{{ user.username|make_list|first|upper }}</span>
+                        class="rounded-circle bg-primary-subtle text-primary fw-bold d-flex align-items-center justify-content-center border border-primary-subtle overflow-hidden"
+                        style="width: 36px; height: 36px;">
+                        {% if user.profile.avatar %}
+                        <img src="{{ user.profile.avatar.url }}" alt="Avatar"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                        {% else %}
+                        {{ user.username|make_list|first|upper }}
+                        {% endif %}
+                    </span>
                     <span class="d-none d-lg-block fw-medium small">{{ user.username }}</span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2 animate-slide-down p-2"
