@@ -60,30 +60,53 @@
 
             <form id="registerForm" method="post" action="{% url 'accounts:register' %}">
                 {% csrf_token %}
+
+                <!-- Non-field errors -->
+                {% if form.non_field_errors %}
+                <div class="error-message show"
+                    style="margin-bottom: 1rem; padding: 0.75rem; background: rgba(239, 68, 68, 0.1); border-radius: 0.5rem; color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);">
+                    {% for error in form.non_field_errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="prenom">Prénom <span class="required">*</span></label>
-                        <input type="text" id="prenom" name="first_name" placeholder="Jean" required>
-                        <div class="error-message" id="prenomError"></div>
+                        <input type="text" id="prenom" name="first_name" placeholder="Jean"
+                            value="{{ form.first_name.value|default:'' }}" required>
+                        <div class="error-message {% if form.first_name.errors %}show{% endif %}" id="prenomError">
+                            {% if form.first_name.errors %}{{ form.first_name.errors.0 }}{% endif %}
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="nom">Nom <span class="required">*</span></label>
-                        <input type="text" id="nom" name="last_name" placeholder="Dupont" required>
-                        <div class="error-message" id="nomError"></div>
+                        <input type="text" id="nom" name="last_name" placeholder="Dupont"
+                            value="{{ form.last_name.value|default:'' }}" required>
+                        <div class="error-message {% if form.last_name.errors %}show{% endif %}" id="nomError">
+                            {% if form.last_name.errors %}{{ form.last_name.errors.0 }}{% endif %}
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="username">Nom d'utilisateur <span class="required">*</span></label>
-                    <input type="text" id="username" name="username" placeholder="jeandupont" required>
-                    <div class="error-message" id="usernameError"></div>
+                    <input type="text" id="username" name="username" placeholder="jeandupont"
+                        value="{{ form.username.value|default:'' }}" required>
+                    <div class="error-message {% if form.username.errors %}show{% endif %}" id="usernameError">
+                        {% if form.username.errors %}{{ form.username.errors.0 }}{% endif %}
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email <span class="required">*</span></label>
-                    <input type="email" id="email" name="email" placeholder="jean.dupont@exemple.com" required>
-                    <div class="error-message" id="emailError"></div>
+                    <input type="email" id="email" name="email" placeholder="jean.dupont@exemple.com"
+                        value="{{ form.email.value|default:'' }}" required>
+                    <div class="error-message {% if form.email.errors %}show{% endif %}" id="emailError">
+                        {% if form.email.errors %}{{ form.email.errors.0 }}{% endif %}
+                    </div>
                 </div>
 
                 <div class="form-row">
@@ -100,7 +123,9 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="error-message" id="passwordError"></div>
+                        <div class="error-message {% if form.password1.errors %}show{% endif %}" id="passwordError">
+                            {% if form.password1.errors %}{{ form.password1.errors.0 }}{% endif %}
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -117,7 +142,10 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="error-message" id="confirmPasswordError"></div>
+                        <div class="error-message {% if form.password2.errors %}show{% endif %}"
+                            id="confirmPasswordError">
+                            {% if form.password2.errors %}{{ form.password2.errors.0 }}{% endif %}
+                        </div>
                     </div>
                 </div>
 

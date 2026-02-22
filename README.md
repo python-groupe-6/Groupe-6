@@ -1,67 +1,760 @@
-# EduQuiz AI – Le Futur de la Révision 🎓🤖
+# EduQuiz AI 🎓🤖
 
-**EduQuiz AI** est une plateforme avancée conçue pour transformer instantanément vos documents PDF en parcours d'apprentissage interactifs. 
+<div align="center">
 
-## 🛠️ Méthodologie de Réalisation
-Ce projet suit une méthodologie rigoureuse pour garantir sa qualité et sa modularité :
-1. **Cahier des charges** : [Consulter le document](./docs/Cahier_des_charges.md)
-2. **Environnement** : Utilisation de `virtualenv` et gestion stricte des dépendances via `requirements.txt`.
-3. **Développement Modulaire** :
-    - `pdf_processor.py` (Extraction)
-    - `quiz_generator.py` (Logique IA/NLP)
-    - `eduquiz_project/` (Structure Django)
-4. **Interface** : Interface Web moderne et dynamique.
-5. **Documentation** : [Manuel Utilisateur](./docs/Manuel_Utilisateur.md)
+![EduQuiz AI](https://img.shields.io/badge/EduQuiz-AI%20Powered-4F46E5?style=for-the-badge&logo=robot&logoColor=white)
+![Django](https://img.shields.io/badge/Django-5.1.5-092E20?style=for-the-badge&logo=django&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+
+**Transformez vos documents en parcours d'apprentissage interactifs avec l'Intelligence Artificielle**
+
+[Démo en ligne](https://eduquiz-ai.onrender.com) • [Documentation](#-documentation) • [Installation](#-installation-rapide) • [Contribuer](#-contribution)
+
+</div>
+
+---
+
+## 📋 Table des Matières
+
+- [À Propos](#-à-propos)
+- [Fonctionnalités](#-fonctionnalités)
+- [Technologies](#-technologies-utilisées)
+- [Prérequis](#-prérequis)
+- [Installation Rapide](#-installation-rapide)
+- [Configuration](#-configuration)
+- [Utilisation](#-utilisation)
+- [Structure du Projet](#-structure-du-projet)
+- [Déploiement](#-déploiement)
+- [Dépannage](#-dépannage)
+- [Contribution](#-contribution)
+- [Documentation](#-documentation)
+- [Licence](#-licence)
+
+---
+
+## 🎯 À Propos
+
+**EduQuiz AI** est une plateforme éducative intelligente qui utilise l'intelligence artificielle pour transformer instantanément vos documents (PDF, DOCX, TXT) en outils de révision interactifs. Générez des quiz personnalisés, suivez votre progression et améliorez vos performances d'apprentissage.
+
+### 🌟 Points Forts
+
+- 🤖 **IA Avancée** : Utilise Google Gemini pour une génération de contenu de haute qualité
+- 🎨 **Design Premium** : Interface moderne et responsive avec mode sombre
+- 📊 **Analytique Complète** : Suivi détaillé de la progression et statistiques de performance
+- 🔒 **Sécurisé** : Authentification robuste et protection des données (RGPD)
+- 🚀 **Performance** : Optimisé pour une expérience utilisateur fluide
+- 📱 **Responsive** : Fonctionne parfaitement sur tous les appareils
+
+---
 
 ## ✨ Fonctionnalités
-- **Design Premium** : Interface moderne et responsive.
-- **Workflow Django** : Gestion complète des utilisateurs, des quiz et des résultats.
-- **Intelligence Hybride** : Google Gemini avec fallback local.
-- **Export PDF** : Rapports de performance téléchargeables.
 
-## 🚀 Démarrage Rapide
+### 🎓 Génération de Quiz Intelligente
+- Analyse automatique de documents avec IA
+- Questions à choix multiples adaptées au contenu
+- Niveaux de difficulté personnalisables (Standard, Avancé, Expert)
+- Explications détaillées pour chaque réponse
 
-### 1. Prérequis
-- Python 3.14 (ou version stable supportée)
-- Clé API Google Gemini (optionnelle, placée dans `.env`)
+### 📚 Gestion de l'Apprentissage
+- Historique complet des quiz avec statistiques
+- Rapports PDF téléchargeables
+- Suivi de progression par catégorie
+- Tableaux de bord analytiques
 
-### 2. Installation
+### 👤 Gestion des Utilisateurs
+- Inscription et authentification sécurisées
+- Profils utilisateurs personnalisables
+- Préférences de langue et thème
+- Réinitialisation de mot de passe par email
+
+### 🎨 Interface Utilisateur
+- Design moderne avec glassmorphism
+- Mode sombre/clair
+- Animations fluides et micro-interactions
+- Navigation intuitive
+
+---
+
+## 📸 Captures d'Écran
+
+### 🏠 Page d'Accueil
+
+![Page d'accueil EduQuiz AI](./docs/screenshots/homepage.png)
+
+*Interface moderne avec hero section, présentation des fonctionnalités et design premium*
+
+### 📝 Inscription
+
+![Formulaire d'inscription](./docs/screenshots/register.png)
+
+*Formulaire d'inscription sécurisé avec validation en temps réel et design glassmorphism*
+
+### 🔐 Connexion
+
+![Page de connexion](./docs/screenshots/login.png)
+
+*Interface de connexion élégante avec option "Se souvenir de moi" et réinitialisation de mot de passe*
+
+### 🎯 Configuration du Quiz
+
+![Configuration du quiz](./docs/screenshots/quiz_setup.png)
+
+*Interface de configuration permettant de télécharger un document et personnaliser les paramètres du quiz*
+
+### 📋 Interface de Quiz
+
+![Passer un quiz](./docs/screenshots/quiz_take.png)
+
+*Interface de quiz interactive avec timer, barre de progression et navigation fluide*
+
+### 📊 Résultats
+
+![Résultats du quiz](./docs/screenshots/quiz_results.png)
+
+*Affichage détaillé des résultats avec statistiques, graphiques et option de téléchargement PDF*
+
+### 📚 Historique
+
+![Historique des quiz](./docs/screenshots/quiz_history.png)
+
+*Tableau de bord complet avec historique des quiz, statistiques de performance et graphiques analytiques*
+
+### 🎨 Mode Sombre
+
+![Mode sombre](./docs/screenshots/dark_mode.png)
+
+*Interface en mode sombre pour un confort visuel optimal*
+
+> **📝 Note :** Pour ajouter vos propres screenshots, consultez le [Guide de Capture](#guide-de-capture-de-screenshots) ci-dessous.
+
+---
+
+## 🛠️ Technologies Utilisées
+
+### Backend
+- **Django 5.1.5** - Framework web Python
+- **PostgreSQL 16** - Base de données relationnelle
+- **Google Gemini AI** - Génération de contenu intelligent
+- **Python 3.10+** - Langage de programmation
+
+### Frontend
+- **HTML5/CSS3** - Structure et style
+- **JavaScript** - Interactivité
+- **Bootstrap 5** - Framework CSS
+- **FontAwesome 6** - Icônes
+
+### Outils & Services
+- **WhiteNoise** - Gestion des fichiers statiques
+- **python-dotenv** - Gestion des variables d'environnement
+- **Pillow** - Traitement d'images
+- **ReportLab** - Génération de PDF
+
+---
+
+## 📦 Prérequis
+
+Avant de commencer, assurez-vous d'avoir installé :
+
+- **Python 3.10 ou supérieur** ([Télécharger](https://www.python.org/downloads/))
+- **PostgreSQL 16** ([Télécharger](https://www.postgresql.org/download/)) *(optionnel, SQLite par défaut)*
+- **Git** ([Télécharger](https://git-scm.com/downloads))
+- **Un éditeur de code** (VS Code recommandé)
+
+### Clé API Google Gemini (Optionnelle)
+Pour utiliser l'IA Google Gemini, obtenez une clé API gratuite :
+1. Visitez [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Créez une nouvelle clé API
+3. Copiez la clé pour la configuration
+
+---
+
+## 🚀 Installation Rapide
+
+### 1. Cloner le Projet
+
 ```bash
-# Installation des dependances via le script automatique
-.\install_dependencies.bat
+# Cloner le dépôt
+git clone https://github.com/python-groupe-6/Groupe-6.git
+
+# Accéder au répertoire
+cd Groupe-6
 ```
 
-Ou manuellement :
+### 2. Créer l'Environnement Virtuel
+
+**Windows :**
 ```bash
-# Activation de l'environnement virtuel (.venv)
-.\.venv\Scripts\activate
+# Créer l'environnement virtuel
+python -m venv .venv_new
 
-# Installation des dépendances
+# Activer l'environnement
+.\.venv_new\Scripts\activate
+```
+
+**macOS/Linux :**
+```bash
+# Créer l'environnement virtuel
+python3 -m venv .venv_new
+
+# Activer l'environnement
+source .venv_new/bin/activate
+```
+
+### 3. Installer les Dépendances
+
+```bash
+# Mettre à jour pip
+python -m pip install --upgrade pip
+
+# Installer les dépendances
 pip install -r requirements.txt
+```
 
-# Migrations de la base de données
+### 4. Configuration de l'Environnement
+
+Créez un fichier `.env` à la racine du projet :
+
+```bash
+# Copier le fichier d'exemple
+cp .env.example .env
+```
+
+Éditez le fichier `.env` avec vos paramètres :
+
+```env
+# Configuration Django
+SECRET_KEY=votre-cle-secrete-django-tres-longue-et-aleatoire
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+
+# Base de données PostgreSQL (optionnel)
+DB_NAME=eduquiz_db
+DB_USER=postgres
+DB_PASSWORD=votre_mot_de_passe
+DB_HOST=localhost
+DB_PORT=5432
+
+# Google Gemini AI (optionnel)
+GEMINI_API_KEY=votre-cle-api-gemini
+
+# Email (pour réinitialisation de mot de passe)
+EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=votre-email@gmail.com
+EMAIL_HOST_PASSWORD=votre-mot-de-passe-application
+```
+
+> **💡 Note :** Si PostgreSQL n'est pas configuré, l'application utilisera automatiquement SQLite pour le développement local.
+
+### 5. Configurer la Base de Données
+
+**Option A : PostgreSQL (Recommandé pour la production)**
+
+```bash
+# Créer la base de données PostgreSQL
+psql -U postgres
+CREATE DATABASE eduquiz_db;
+\q
+
+# Appliquer les migrations
 python manage.py migrate
 ```
 
-### 3. Lancement du serveur
-```bash
-# Créer la base de données dans PostgreSQL
-# Puis configurer le fichier .env avec vos credentials
-# Voir docs/Migration_PostgreSQL.md pour plus de détails
+**Option B : SQLite (Développement local)**
 
-# Vérifier la connexion
-python scripts/verify_database.py
+```bash
+# Les migrations créeront automatiquement la base SQLite
+python manage.py migrate
 ```
 
-**Option 2 : SQLite (Développement local)**
-L'application bascule automatiquement sur SQLite si PostgreSQL n'est pas configuré.
+### 6. Créer un Super Utilisateur
 
-### 4. Lancement
 ```bash
+# Créer un compte administrateur
+python manage.py createsuperuser
+
+# Suivez les instructions pour définir :
+# - Nom d'utilisateur
+# - Email
+# - Mot de passe
+```
+
+### 7. Collecter les Fichiers Statiques
+
+```bash
+# Collecter tous les fichiers CSS, JS, images
+python manage.py collectstatic --noinput
+```
+
+### 8. Lancer le Serveur de Développement
+
+```bash
+# Démarrer le serveur
+python manage.py runserver
+
+# Le serveur sera accessible à :
+# http://127.0.0.1:8000/
+```
+
+🎉 **Félicitations !** Votre application est maintenant opérationnelle !
+
+---
+
+## ⚙️ Configuration
+
+### Variables d'Environnement Importantes
+
+| Variable | Description | Valeur par Défaut | Requis |
+|----------|-------------|-------------------|--------|
+| `SECRET_KEY` | Clé secrète Django | - | ✅ Oui |
+| `DEBUG` | Mode debug | `False` | ✅ Oui |
+| `ALLOWED_HOSTS` | Hôtes autorisés | `localhost` | ✅ Oui |
+| `DB_NAME` | Nom de la base PostgreSQL | `eduquiz_db` | ❌ Non |
+| `DB_USER` | Utilisateur PostgreSQL | `postgres` | ❌ Non |
+| `DB_PASSWORD` | Mot de passe PostgreSQL | - | ❌ Non |
+| `GEMINI_API_KEY` | Clé API Google Gemini | - | ❌ Non |
+| `EMAIL_HOST_USER` | Email pour notifications | - | ❌ Non |
+
+### Génération d'une SECRET_KEY
+
+```python
+# Dans un terminal Python
+from django.core.management.utils import get_random_secret_key
+print(get_random_secret_key())
+```
+
+---
+
+## 📖 Utilisation
+
+### 1. Accéder à l'Application
+
+Ouvrez votre navigateur et accédez à : **http://127.0.0.1:8000/**
+
+### 2. Créer un Compte
+
+1. Cliquez sur **"Inscription"**
+2. Remplissez le formulaire avec vos informations
+3. Acceptez les conditions d'utilisation
+4. Cliquez sur **"Créer un compte"**
+
+### 3. Générer un Quiz
+
+1. **Connectez-vous** à votre compte
+2. Cliquez sur **"Nouveau Quiz"**
+3. **Téléchargez** un document (PDF, DOCX, ou TXT)
+4. **Configurez** les paramètres :
+   - Nombre de questions (3-15)
+   - Niveau de difficulté
+   - Temps limite
+5. Cliquez sur **"Générer le Quiz"**
+6. **Répondez** aux questions
+7. **Consultez** vos résultats et téléchargez le rapport PDF
+
+### 4. Suivre votre Progression
+
+- Accédez à **"Historique"** pour voir tous vos quiz
+- Consultez vos **statistiques** de performance
+- Analysez vos **points forts** et **axes d'amélioration**
+
+### 5. Administration
+
+Accédez au panneau d'administration : **http://127.0.0.1:8000/admin/**
+
+- Gérez les utilisateurs
+- Consultez les quiz générés
+- Modérez le contenu
+- Configurez les paramètres
+
+---
+
+## 📁 Structure du Projet
+
+```
+Groupe-6/
+├── 📁 accounts/                    # Application de gestion des utilisateurs
+│   ├── 📁 migrations/              # Migrations de base de données
+│   ├── 📁 templates/accounts/      # Templates d'authentification
+│   ├── forms.py                    # Formulaires d'inscription/connexion
+│   ├── models.py                   # Modèles utilisateur
+│   ├── urls.py                     # Routes d'authentification
+│   └── views.py                    # Vues d'authentification
+│
+├── 📁 core/                        # Application principale
+│   ├── 📁 migrations/              # Migrations de base de données
+│   ├── 📁 templates/core/          # Templates des pages principales
+│   │   ├── home.html               # Page d'accueil
+│   │   ├── about.html              # À propos
+│   │   ├── contact.html            # Contact
+│   │   ├── terms.html              # Conditions d'utilisation
+│   │   ├── privacy.html            # Politique de confidentialité
+│   │   └── help.html               # Aide
+│   ├── models.py                   # Modèles (Contact, Testimonial)
+│   ├── urls.py                     # Routes principales
+│   └── views.py                    # Vues principales
+│
+├── 📁 quiz/                        # Application de quiz
+│   ├── 📁 migrations/              # Migrations de base de données
+│   ├── 📁 templates/quiz/          # Templates de quiz
+│   │   ├── quiz_setup.html         # Configuration du quiz
+│   │   ├── quiz_take.html          # Passer le quiz
+│   │   ├── quiz_result.html        # Résultats
+│   │   └── quiz_history.html       # Historique
+│   ├── models.py                   # Modèles (Quiz, Question, Result)
+│   ├── services.py                 # Services (génération IA)
+│   ├── urls.py                     # Routes de quiz
+│   └── views.py                    # Vues de quiz
+│
+├── 📁 eduquiz_project/             # Configuration Django
+│   ├── settings.py                 # Paramètres du projet
+│   ├── urls.py                     # Routes principales
+│   └── wsgi.py                     # Configuration WSGI
+│
+├── 📁 static/                      # Fichiers statiques
+│   ├── 📁 css/                     # Feuilles de style
+│   │   ├── styles.css              # Styles globaux
+│   │   ├── auth.css                # Styles d'authentification
+│   │   ├── legal.css               # Styles pages légales
+│   │   └── quiz.css                # Styles de quiz
+│   ├── 📁 js/                      # Scripts JavaScript
+│   └── 📁 images/                  # Images et logos
+│
+├── 📁 templates/                   # Templates globaux
+│   ├── base.html                   # Template de base
+│   └── 📁 registration/            # Templates d'authentification
+│       ├── login.html              # Page de connexion
+│       └── password_reset.html     # Réinitialisation MDP
+│
+├── 📁 media/                       # Fichiers uploadés (générés)
+├── 📁 staticfiles/                 # Fichiers statiques collectés (générés)
+│
+├── .env                            # Variables d'environnement (à créer)
+├── .env.example                    # Exemple de configuration
+├── .gitignore                      # Fichiers ignorés par Git
+├── manage.py                       # Script de gestion Django
+├── requirements.txt                # Dépendances Python
+├── README.md                       # Ce fichier
+└── db.sqlite3                      # Base de données SQLite (générée)
+```
+
+---
+
+## 🌐 Déploiement
+
+### Déploiement sur Render
+
+1. **Créer un compte** sur [Render](https://render.com)
+
+2. **Créer un nouveau Web Service**
+   - Connectez votre dépôt GitHub
+   - Sélectionnez la branche `main`
+
+3. **Configuration du Service**
+   ```
+   Build Command: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
+   Start Command: gunicorn eduquiz_project.wsgi:application
+   ```
+
+4. **Variables d'Environnement**
+   Ajoutez dans le dashboard Render :
+   - `SECRET_KEY`
+   - `DEBUG=False`
+   - `ALLOWED_HOSTS=votre-app.onrender.com`
+   - `DATABASE_URL` (PostgreSQL fourni par Render)
+   - `GEMINI_API_KEY`
+
+5. **Déployer** et accédez à votre application !
+
+📖 **Guide détaillé :** Consultez [DEPLOYMENT_RENDER.md](./DEPLOYMENT_RENDER.md)
+
+---
+
+## 🔧 Dépannage
+
+### Problème : Le serveur ne démarre pas
+
+**Solution :**
+```bash
+# Vérifier que l'environnement virtuel est activé
+# Windows
+.\.venv_new\Scripts\activate
+
+# macOS/Linux
+source .venv_new/bin/activate
+
+# Réinstaller les dépendances
+pip install -r requirements.txt
+
+# Vérifier les migrations
+python manage.py migrate
+```
+
+### Problème : Erreur de connexion à PostgreSQL
+
+**Solution :**
+```bash
+# Vérifier que PostgreSQL est en cours d'exécution
+# Windows
+pg_ctl status
+
+# Vérifier les credentials dans .env
+# Ou utiliser SQLite en commentant les variables DB_* dans .env
+```
+
+### Problème : Les fichiers statiques ne se chargent pas
+
+**Solution :**
+```bash
+# Vérifier que DEBUG=True dans .env
+# Collecter les fichiers statiques
+python manage.py collectstatic --noinput
+
+# Redémarrer le serveur
 python manage.py runserver
 ```
 
-## 📚 Documentation complémentaire
-- [Guide de migration PostgreSQL](./docs/Migration_PostgreSQL.md)
-- [Cahier des charges](./docs/Cahier_des_charges.md)
-- [Manuel Utilisateur](./docs/Manuel_Utilisateur.md)
+### Problème : Erreur "SECRET_KEY not found"
+
+**Solution :**
+```bash
+# Générer une nouvelle SECRET_KEY
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+
+# Ajouter dans .env
+SECRET_KEY=la-cle-generee
+```
+
+### Problème : L'IA ne génère pas de quiz
+
+**Solution :**
+1. Vérifiez que `GEMINI_API_KEY` est définie dans `.env`
+2. Vérifiez votre quota API sur [Google AI Studio](https://makersuite.google.com/)
+3. L'application utilisera un fallback local si l'API n'est pas disponible
+
+### Problème : Erreur lors de l'inscription
+
+**Solution :**
+```bash
+# Vérifier que les migrations sont appliquées
+python manage.py showmigrations
+
+# Appliquer les migrations manquantes
+python manage.py migrate
+
+# Créer un superuser pour tester
+python manage.py createsuperuser
+```
+
+---
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! Voici comment contribuer :
+
+### 1. Fork le Projet
+
+```bash
+# Cliquez sur "Fork" en haut de la page GitHub
+```
+
+### 2. Créer une Branche
+
+```bash
+git checkout -b feature/AmazingFeature
+```
+
+### 3. Commit vos Changements
+
+```bash
+git add .
+git commit -m "Add: Description de votre fonctionnalité"
+```
+
+### 4. Push vers la Branche
+
+```bash
+git push origin feature/AmazingFeature
+```
+
+### 5. Ouvrir une Pull Request
+
+Allez sur GitHub et créez une Pull Request avec une description détaillée.
+
+### Conventions de Commit
+
+- `Add:` Nouvelle fonctionnalité
+- `Fix:` Correction de bug
+- `Update:` Mise à jour de code existant
+- `Docs:` Documentation
+- `Style:` Formatage, style
+- `Refactor:` Refactorisation de code
+- `Test:` Ajout de tests
+
+---
+
+## 📚 Documentation
+
+### Documentation Complémentaire
+
+- 📖 [Guide de Migration PostgreSQL](./docs/Migration_PostgreSQL.md)
+- 📋 [Cahier des Charges](./docs/Cahier_des_charges.md)
+- 👤 [Manuel Utilisateur](./docs/Manuel_Utilisateur.md)
+- 🚀 [Guide de Déploiement Render](./DEPLOYMENT_RENDER.md)
+
+### API et Services
+
+- [Documentation Django](https://docs.djangoproject.com/)
+- [Google Gemini AI](https://ai.google.dev/)
+- [Bootstrap 5](https://getbootstrap.com/docs/5.0/)
+- [PostgreSQL](https://www.postgresql.org/docs/)
+
+---
+
+## 👥 Équipe
+
+**Groupe 6 - Python**
+
+- 👨‍💻 Développeurs Backend & Frontend
+- 🎨 Designers UI/UX
+- 📊 Analystes de données
+- 🧪 Testeurs QA
+
+---
+
+## 📄 Licence
+
+Ce projet est sous licence **MIT**. Voir le fichier [LICENSE](./LICENSE) pour plus de détails.
+
+---
+
+## 🙏 Remerciements
+
+- Google Gemini AI pour la génération de contenu intelligent
+- La communauté Django pour le framework robuste
+- Bootstrap pour les composants UI
+- FontAwesome pour les icônes
+- Tous les contributeurs du projet
+
+---
+
+## 📷 Guide de Capture de Screenshots
+
+Pour ajouter vos propres captures d'écran au README, suivez ces étapes :
+
+### 1. Lancer l'Application
+
+```bash
+# Assurez-vous que le serveur est en cours d'exécution
+python manage.py runserver
+```
+
+### 2. Capturer les Screenshots
+
+**Méthode 1 : Outil de Capture Windows**
+- Appuyez sur `Windows + Shift + S`
+- Sélectionnez la zone à capturer
+- L'image est copiée dans le presse-papiers
+
+**Méthode 2 : Extension de Navigateur**
+- Utilisez une extension comme "Awesome Screenshot" ou "Fireshot"
+- Capturez la page entière ou une zone spécifique
+
+**Méthode 3 : Outils Professionnels**
+- **Snagit** (Windows/Mac) - Recommandé pour des captures professionnelles
+- **Greenshot** (Windows) - Gratuit et open-source
+- **Skitch** (Mac) - Gratuit avec annotations
+
+### 3. Pages à Capturer
+
+Capturez les pages suivantes pour une documentation complète :
+
+| Page | URL | Nom du Fichier |
+|------|-----|----------------|
+| Page d'accueil | `http://127.0.0.1:8000/` | `homepage.png` |
+| Inscription | `http://127.0.0.1:8000/auth/register/` | `register.png` |
+| Connexion | `http://127.0.0.1:8000/auth/login/` | `login.png` |
+| Configuration Quiz | `http://127.0.0.1:8000/quiz/setup/` | `quiz_setup.png` |
+| Passer un Quiz | `http://127.0.0.1:8000/quiz/take/<id>/` | `quiz_take.png` |
+| Résultats | `http://127.0.0.1:8000/quiz/result/<id>/` | `quiz_results.png` |
+| Historique | `http://127.0.0.1:8000/quiz/history/` | `quiz_history.png` |
+| Mode Sombre | (Activer le mode sombre) | `dark_mode.png` |
+
+### 4. Optimiser les Images
+
+```bash
+# Installer un outil d'optimisation (optionnel)
+pip install pillow
+
+# Script Python pour redimensionner
+from PIL import Image
+
+img = Image.open('screenshot.png')
+img = img.resize((1200, 800), Image.LANCZOS)
+img.save('screenshot_optimized.png', optimize=True, quality=85)
+```
+
+### 5. Sauvegarder dans le Bon Dossier
+
+```bash
+# Créer le dossier si nécessaire
+mkdir -p docs/screenshots
+
+# Copier vos screenshots
+cp screenshot.png docs/screenshots/homepage.png
+```
+
+### 6. Vérifier dans le README
+
+Les images seront automatiquement affichées dans le README grâce aux liens déjà configurés :
+
+```markdown
+![Page d'accueil EduQuiz AI](./docs/screenshots/homepage.png)
+```
+
+### 7. Commit et Push
+
+```bash
+git add docs/screenshots/
+git commit -m "Docs: Ajout des screenshots de l'application"
+git push origin main
+```
+
+### Conseils pour de Bons Screenshots
+
+✅ **À Faire :**
+- Utilisez une résolution de 1920x1080 ou supérieure
+- Capturez en plein écran pour un rendu professionnel
+- Assurez-vous que les données affichées sont cohérentes
+- Utilisez des données de démonstration réalistes
+- Capturez avec un bon éclairage (mode clair ET sombre)
+
+❌ **À Éviter :**
+- Screenshots flous ou pixelisés
+- Données personnelles sensibles
+- Erreurs ou bugs visibles
+- Résolution trop faible
+- Captures partielles ou mal cadrées
+
+---
+
+## 📞 Contact
+
+**Email :** contacteduquizai@gmail.com
+
+**GitHub :** [python-groupe-6/Groupe-6](https://github.com/python-groupe-6/Groupe-6)
+
+**Démo :** [eduquiz-ai.onrender.com](https://eduquiz-ai.onrender.com)
+
+---
+
+<div align="center">
+
+**Fait avec ❤️ pour l'éducation**
+
+⭐ Si ce projet vous a aidé, n'hésitez pas à lui donner une étoile !
+
+</div>

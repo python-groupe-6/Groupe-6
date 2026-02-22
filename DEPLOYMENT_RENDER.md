@@ -58,7 +58,7 @@ git push origin main
 ```
 
 git add .
-git commit -m "Ajout des modifications sur les thèmes de sécurité"
+git commit -m "Ajout des modifications sur le lancement dur projet"
 git push origin main
 
 ### 2.3 Déploie sur Render
