@@ -123,9 +123,10 @@
                             </div>
 
                             <div class="mt-auto">
-                                <button class="btn btn-light-custom w-100 rounded-pill py-2 small fw-medium" disabled>
-                                    <i class="fas fa-info-circle me-1"></i> Analyse bientôt disponible
-                                </button>
+                                <a href="{% url 'quiz:quiz_analysis' item.id %}"
+                                    class="btn btn-primary-custom w-100 rounded-pill py-2 small fw-medium text-decoration-none text-center d-block">
+                                    <i class="fas fa-chart-bar me-1"></i> Voir l'analyse
+                                </a>
                             </div>
                         </div>
                     </div>

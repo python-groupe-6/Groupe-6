@@ -133,6 +133,20 @@ def quiz_history(request):
         'best_score': best_score,
         'avg_score': avg_score
     })
+
+@login_required
+def quiz_analysis(request, history_id):
+    from django.shortcuts import get_object_or_404
+    history_item = get_object_or_404(ScoreHistory, id=history_id, user=request.user)
+    questions = []
+    if history_item.quiz:
+        questions = history_item.quiz.questions.all()
+    return render(request, 'quiz/quiz_analysis.html', {
+        'history_item': history_item,
+        'questions': questions,
+        'score_pct': round((history_item.score / history_item.total_questions) * 100) if history_item.total_questions else 0,
+    })
+
 from django.http import HttpResponse
 from gtts import gTTS
 import io

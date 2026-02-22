@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Analyse du Quiz - EduQuiz AI{% endblock %}
+{% block content %}
+{% with hi=history_item %}
+<div class="container py-5 animate-fade-in">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-5">
+        <div>
+            <a href="{% url 'quiz:quiz_history' %}"
+                class="text-muted small text-decoration-none mb-2 d-inline-flex align-items-center gap-1"><i
+                    class="fas fa-arrow-left"></i> Retour</a>
+            <h1 class="brand-font mb-1 mt-2">Analyse du Quiz</h1>
+            <p class="text-muted mb-0">{% if hi.quiz %}{{hi.quiz.title}}{% else %}Quiz sur Document{% endif %}</p>
+        </div>
+        <div class="score-summary-card text-center p-4 rounded-4 shadow-sm">
+            <div class="score-big fw-bold">{{hi.score}}<span
+                    class="score-total text-muted">/{{hi.total_questions}}</span></div>
+            <div class="progress mt-2" style="height:8px;border-radius:10px;width:120px;margin:0 auto;">
+                <div class="progress-bar rounded-pill progress-dynamic {% if score_pct >= 80 %}bg-success{% elif score_pct >= 50 %}bg-primary{% else %}bg-warning{% endif %}"
+                    role="progressbar" data-width="{{score_pct}}"></div>
+            </div>
+            <div class="small text-muted mt-1">{{score_pct}}% de réussite</div>
+        </div>
+    </div>
+    <div class="d-flex flex-wrap gap-3 mb-5">
+        <span class="meta-pill"><i class="fas fa-layer-group me-1 text-primary"></i> {{hi.difficulty}}</span>
+        <span class="meta-pill"><i class="fas fa-clock me-1 text-primary"></i> {{hi.time_elapsed|default:"N/A"}}</span>
+        <span class="meta-pill"><i class="far fa-calendar me-1 text-primary"></i>
+            {{hi.completed_at|date:"d/m/Y"}}</span>
+    </div>
+    {% if questions %}
+    <h4 class="fw-bold mb-4"><i class="fas fa-list-check me-2 text-primary"></i>Révision</h4>
+    <div class="d-flex flex-column gap-4">
+        {% for q in questions %}
+        <div class="analysis-card rounded-4 shadow-sm p-4">
+            <div class="d-flex align-items-start gap-3 mb-3">
+                <div class="q-number">{{forloop.counter}}</div>
+                <p class="fw-semibold mb-0 flex-grow-1">{{q.text}}</p>
+            </div>
+            <div class="row g-2 mb-3 ms-5">
+                {% for o in q.options %}
+                <div class="col-md-6">
+                    <div
+                        class="option-item {% if o == q.correct_answer %}correct{% else %}neutral{% endif %} d-flex align-items-center gap-2 px-3 py-2 rounded-3">
+                        <i
+                            class="{% if o == q.correct_answer %}fas fa-check-circle text-success{% else %}far fa-circle text-muted{% endif %}"></i>
+                        <span>{{o}}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% if q.explanation %}<div class="explanation-box ms-5 p-3 rounded-3">
+                <p class="mb-0 small text-muted"><i class="fas fa-lightbulb text-warning me-1"></i>{{q.explanation}}</p>
+            </div>{% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="d-flex gap-3 mt-5 justify-content-center flex-wrap">
+        <a href="{% url 'quiz:quiz_history' %}"
+            class="btn-outline-custom text-decoration-none px-4 py-2 rounded-pill">Historique</a>
+        <a href="{% url 'quiz:quiz_setup' %}"
+            class="btn-primary-custom text-decoration-none px-4 py-2 shadow-sm">Nouveau Quiz</a>
+    </div>
+</div>
+{% endwith %}
+<style>
+    .score-summary-card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        min-width: 160px;
+    }
+
+    .score-big {
+        font-size: 2.5rem;
+        line-height: 1;
+    }
+
+    .meta-pill {
+        background: #f3f4f6;
+        border: 1px solid #e5e7eb;
+        padding: 0.4rem 1rem;
+        border-radius: 50px;
+        font-size: 0.875rem;
+    }
+
+    .analysis-card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+    }
+
+    .q-number {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(79, 70, 229, 0.1);
+        color: #4f46e5;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .option-item {
+        font-size: 0.9rem;
+    }
+
+    .option-item.correct {
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        color: #065f46;
+    }
+
+    .option-item.neutral {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        color: #6b7280;
+    }
+
+    .explanation-box {
+        background: rgba(245, 158, 11, 0.05);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .btn-outline-custom {
+        border: 2px solid #e5e7eb;
+        color: #1a1a2e;
+        padding: 0.5rem 1.5rem;
+        border-radius: 50px;
+        transition: all 0.2s;
+    }
+
+    .progress-dynamic {
+        transition: width 1s;
+        width: 0;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            document.querySelectorAll('.progress-dynamic').forEach(b => {
+                const w = b.getAttribute('data-width');
+                if (w) b.style.width = w + '%';
+            });
+        }, 300);
+    });
+</script>
+{% endblock %}

@@ -9,5 +9,6 @@ urlpatterns = [
     path('history/', views.quiz_history, name='quiz_history'),
     path('generate-audio/', views.generate_audio, name='generate_audio'),
     path('export-flashcards/<int:quiz_id>/', views.export_flashcards, name='export_flashcards'),
+    path('analysis/<int:history_id>/', views.quiz_analysis, name='quiz_analysis'),
 ]
 
