@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
-{% load i18n static %}
+{% load static %}
 
-{% block title %}{% trans "Historique des Quiz" %} - EduQuiz AI{% endblock %}
+{% block title %}Historique des Quiz - EduQuiz AI{% endblock %}
 
 {% block content %}
 <div class="container py-5 animate-fade-in">
     <!-- Header Section -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4 mb-5">
         <div>
-            <h1 class="brand-font mb-2">{% trans "Historique" %}</h1>
-            <p class="text-muted">{% trans "Suivez vos progrès et analysez vos performances." %}</p>
+            <h1 class="brand-font mb-2">Historique</h1>
+            <p class="text-muted">Suivez vos progrès et analysez vos performances.</p>
         </div>
         <a href="{% url 'quiz:quiz_setup' %}" class="btn-primary-custom text-decoration-none shadow-sm">
-            <i class="fas fa-plus me-2"></i>{% trans "Nouveau Quiz" %}
+            <i class="fas fa-plus me-2"></i>Nouveau Quiz
         </a>
     </div>
 
@@ -25,7 +25,7 @@
                     <i class="fas fa-check-circle"></i>
                 </div>
                 <h3 class="fw-bold mb-1">{{ total_quizzes }}</h3>
-                <p class="text-muted small mb-0">{% trans "Quiz Terminés" %}</p>
+                <p class="text-muted small mb-0">Quiz Terminés</p>
             </div>
         </div>
         <div class="col-6 col-md-3">
@@ -34,7 +34,7 @@
                     <i class="fas fa-star"></i>
                 </div>
                 <h3 class="fw-bold mb-1">{{ best_score }}</h3>
-                <p class="text-muted small mb-0">{% trans "Meilleur Score" %}</p>
+                <p class="text-muted small mb-0">Meilleur Score</p>
             </div>
         </div>
         <div class="col-6 col-md-3">
@@ -43,7 +43,7 @@
                     <i class="fas fa-chart-line"></i>
                 </div>
                 <h3 class="fw-bold mb-1">{{ avg_score }}</h3>
-                <p class="text-muted small mb-0">{% trans "Moyenne" %}</p>
+                <p class="text-muted small mb-0">Moyenne</p>
             </div>
         </div>
         <div class="col-6 col-md-3">
@@ -53,13 +53,10 @@
                 </div>
                 <h3 class="fw-bold mb-1">
                     {% if total_quizzes > 0 %}
-                    {% if avg_score >= 8 %}{% trans "B" %}{% elif avg_score >= 5 %}{% trans "C" %}{% else %}{% trans "D"
-                    %}{% endif %}
-                    {% else %}
-                    -
-                    {% endif %}
+                    {% if avg_score >= 8 %}A{% elif avg_score >= 5 %}C{% else %}D{% endif %}
+                    {% else %}-{% endif %}
                 </h3>
-                <p class="text-muted small mb-0">{% trans "Niveau" %}</p>
+                <p class="text-muted small mb-0">Niveau</p>
             </div>
         </div>
     </div>
@@ -71,226 +68,161 @@
             <div class="card history-card border-0 rounded-4 h-100 shadow-sm transition-hover">
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
-                        <div
-                            class="score-badge p-2 px-3 rounded-pill {% if item.score >= 4 %}excellent{% elif item.score >= 3 %}good{% else %}retry{% endif %}">
-                            <span class="fw-bold">{{ item.score }}</span>
-                            <span class="opacity-50 mx-1">/</span>
-                            <span>{{ item.total_questions }}</span>
-                        </div>
-                        <div class="text-muted small d-flex align-items-center gap-1">
-                            <i class="far fa-calendar-alt"></i>
-                            <span>{{ item.completed_at|date:"d M Y" }}</span>
-                        </div>
-                    </div>
+                        {% if item.score >= 4 %}
+                        <div class="score-badge p-2 px-3 rounded-pill excellent">
+                            {% elif item.score >= 3 %}
+                            <div class="score-badge p-2 px-3 rounded-pill good">
+                                {% else %}
+                                <div class="score-badge p-2 px-3 rounded-pill retry">
+                                    {% endif %}
+                                    <span class="fw-bold">{{ item.score }}</span>
+                                    <span class="opacity-50 mx-1">/</span>
+                                    <span>{{ item.total_questions }}</span>
+                                </div>
+                                <div class="text-muted small d-flex align-items-center gap-1">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>{{ item.completed_at|date:"d M Y" }}</span>
+                                </div>
+                            </div>
 
-                    <h5 class="fw-bold mb-3">{% if item.quiz %}{{ item.quiz.title }}{% else %}{% trans "Quiz sur
-                        Document" %}{% endif %}</h5>
+                            {% if item.quiz %}
+                            <h5 class="fw-bold mb-3">{{ item.quiz.title }}</h5>
+                            {% else %}
+                            <h5 class="fw-bold mb-3">Quiz sur Document</h5>
+                            {% endif %}
 
-                    <div class="metadata-row d-flex flex-wrap gap-3 mb-4">
-                        <div class="meta-item">
-                            <i class="fas fa-layer-group text-primary opacity-50 me-1"></i>
-                            <span>{{ item.difficulty }}</span>
-                        </div>
-                        <div class="meta-item">
-                            <i class="fas fa-clock text-primary opacity-50 me-1"></i>
-                            <span>{{ item.time_elapsed|default:"N/A" }}</span>
-                        </div>
-                    </div>
+                            <div class="metadata-row d-flex flex-wrap gap-3 mb-4">
+                                <div class="meta-item">
+                                    <i class="fas fa-layer-group text-primary opacity-50 me-1"></i>
+                                    <span>{{ item.difficulty }}</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-clock text-primary opacity-50 me-1"></i>
+                                    <span>{{ item.time_elapsed|default:"N/A" }}</span>
+                                </div>
+                            </div>
 
-                    <div class="progress-container mb-4">
-                        {% widthratio item.score item.total_questions 100 as score_pct %}
-                        <div class="progress mb-2" style="height: 8px; border-radius: 10px;">
-                            <div class="progress-bar rounded-pill progress-dynamic {% if item.score >= 4 %}bg-success{% elif item.score >= 3 %}bg-primary{% else %}bg-warning{% endif %}"
-                                role="progressbar" data-width="{{ score_pct }}"></div>
-                        </div>
-                        <div class="d-flex justify-content-between small text-muted">
-                            <span>{% trans "Progression" %}</span>
-                            <span>{{ score_pct }}%</span>
-                        </div>
-                    </div>
+                            <div class="progress-container mb-4">
+                                {% widthratio item.score item.total_questions 100 as score_pct %}
+                                <div class="progress mb-2" style="height: 8px; border-radius: 10px;">
+                                    {% if item.score >= 4 %}
+                                    <div class="progress-bar rounded-pill progress-dynamic bg-success"
+                                        role="progressbar" data-width="{{ score_pct }}"></div>
+                                    {% elif item.score >= 3 %}
+                                    <div class="progress-bar rounded-pill progress-dynamic bg-primary"
+                                        role="progressbar" data-width="{{ score_pct }}"></div>
+                                    {% else %}
+                                    <div class="progress-bar rounded-pill progress-dynamic bg-warning"
+                                        role="progressbar" data-width="{{ score_pct }}"></div>
+                                    {% endif %}
+                                </div>
+                                <div class="d-flex justify-content-between small text-muted">
+                                    <span>Progression</span>
+                                    <span>{{ score_pct }}%</span>
+                                </div>
+                            </div>
 
-                    <!-- Details Placeholder with better design -->
-                    <div class="mt-auto">
-                        <button class="btn btn-light-custom w-100 rounded-pill py-2 small fw-medium" disabled>
-                            <i class="fas fa-info-circle me-1"></i> {% trans "Analyse bientôt disponible" %}
-                        </button>
+                            <div class="mt-auto">
+                                <button class="btn btn-light-custom w-100 rounded-pill py-2 small fw-medium" disabled>
+                                    <i class="fas fa-info-circle me-1"></i> Analyse bientôt disponible
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-        </div>
-        {% endfor %}
-    </div>
 
-    <!-- Hidden data for JavaScript -->
-    <div id="historyDataContainer" style="display: none;" data-history='[
-            {% for item in history|dictsort:"completed_at" %}
-            {
-                "date": "{{ item.completed_at|date:"d/m" }}",
-                "score": {{ item.score }},
-                "total": {{ item.total_questions }},
-                "percent": {% widthratio item.score item.total_questions 100 %}
-            }{% if not forloop.last %},{% endif %}
-            {% endfor %}
-         ]'>
-    </div>
-
-    {% else %}
-    <!-- Empty State -->
-    <div class="text-center py-5 glass-card rounded-5 border-0 shadow-sm">
-        <div class="empty-state-icon mb-4">
-            <div class="icon-circle mx-auto bg-primary-subtle text-primary">
-                <i class="fas fa-history fa-2x"></i>
+            {% else %}
+            <!-- Empty State -->
+            <div class="text-center py-5 glass-card rounded-5 border-0 shadow-sm">
+                <div class="empty-state-icon mb-4">
+                    <div class="icon-circle mx-auto bg-primary-subtle text-primary">
+                        <i class="fas fa-history fa-2x"></i>
+                    </div>
+                </div>
+                <h3 class="fw-bold mb-3">Votre historique est vide</h3>
+                <p class="text-muted mb-4 mx-auto" style="max-width: 400px;">
+                    Il est temps de mettre vos connaissances à l'épreuve ! Générez un quiz à partir de vos cours ou
+                    documents.
+                </p>
+                <a href="{% url 'quiz:quiz_setup' %}"
+                    class="btn-primary-custom text-decoration-none px-5 py-3 shadow-lg">
+                    Générer mon premier quiz
+                </a>
             </div>
+            {% endif %}
         </div>
-        <h3 class="fw-bold mb-3">{% trans "Votre historique est vide" %}</h3>
-        <p class="text-muted mb-4 mx-auto" style="max-width: 400px;">
-            {% trans "Il est temps de mettre vos connaissances à l'épreuve ! Générez un quiz à partir de vos cours ou
-            documents." %}
-        </p>
-        <a href="{% url 'quiz:quiz_setup' %}" class="btn-primary-custom text-decoration-none px-5 py-3 shadow-lg">
-            {% trans "Générer mon premier quiz" %}
-        </a>
-    </div>
-    {% endif %}
-</div>
 
-<style>
-    /* Stats Layout */
-    .stats-icon-wrapper {
-        width: 48px;
-        height: 48px;
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.25rem;
-    }
+        <style>
+            .stats-icon-wrapper {
+                width: 48px;
+                height: 48px;
+                border-radius: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.25rem;
+            }
 
-    /* Score Badges */
-    .score-badge {
-        border: 1px solid transparent;
-        transition: all 0.3s ease;
-    }
+            .score-badge {
+                border: 1px solid transparent;
+                transition: all 0.3s ease;
+            }
 
-    .score-badge.excellent {
-        background: rgba(16, 185, 129, 0.1);
-        color: #10b981;
-        border-color: rgba(16, 185, 129, 0.2);
-    }
+            .score-badge.excellent {
+                background: rgba(16, 185, 129, 0.1);
+                color: #10b981;
+                border-color: rgba(16, 185, 129, 0.2);
+            }
 
-    .score-badge.good {
-        background: rgba(79, 70, 229, 0.1);
-        color: #4f46e5;
-        border-color: rgba(79, 70, 229, 0.2);
-    }
+            .score-badge.good {
+                background: rgba(79, 70, 229, 0.1);
+                color: #4f46e5;
+                border-color: rgba(79, 70, 229, 0.2);
+            }
 
-    .score-badge.retry {
-        background: rgba(245, 158, 11, 0.1);
-        color: #f59e0b;
-        border-color: rgba(245, 158, 11, 0.2);
-    }
+            .score-badge.retry {
+                background: rgba(245, 158, 11, 0.1);
+                color: #f59e0b;
+                border-color: rgba(245, 158, 11, 0.2);
+            }
 
-    /* Metadata Items */
-    .meta-item {
-        font-size: 0.875rem;
-        color: var(--text-muted);
-    }
+            .meta-item {
+                font-size: 0.875rem;
+                color: var(--text-muted);
+            }
 
-    /* Custom Button */
-    .btn-light-custom {
-        background: var(--bg-main);
-        border: 1px solid var(--border);
-        color: var(--text-muted);
-        transition: all 0.2s ease;
-    }
+            .btn-light-custom {
+                background: var(--bg-main);
+                border: 1px solid var(--border);
+                color: var(--text-muted);
+                transition: all 0.2s ease;
+            }
 
-    /* Empty state overrides */
-    .icon-circle {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+            .icon-circle {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-    /* Dynamic progress logic */
-    .progress-dynamic {
-        transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-        width: 0;
-    }
-</style>
+            .progress-dynamic {
+                transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+                width: 0;
+            }
+        </style>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        setTimeout(() => {
-            document.querySelectorAll('.progress-dynamic').forEach(bar => {
-                const width = bar.getAttribute('data-width');
-                if (width) {
-                    bar.style.width = width + '%';
-                }
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(() => {
+                    document.querySelectorAll('.progress-dynamic').forEach(bar => {
+                        const width = bar.getAttribute('data-width');
+                        if (width) bar.style.width = width + '%';
+                    });
+                }, 300);
             });
-        }, 300);
-    });
-</script>
-
-<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const container = document.getElementById('historyDataContainer');
-        if (!container) return;
-
-        const historyData = JSON.parse(container.getAttribute('data-history') || '[]');
-
-        if (historyData.length > 0) {
-            const trace = {
-                x: historyData.map(d => d.date),
-                y: historyData.map(d => d.percent),
-                type: 'scatter',
-                mode: 'lines+markers',
-                name: 'Score %',
-                line: {
-                    color: '#4f46e5',
-                    width: 3,
-                    shape: 'spline'
-                },
-                marker: {
-                    size: 8,
-                    color: '#4f46e5'
-                },
-                fill: 'tozeroy',
-                fillcolor: 'rgba(79, 70, 229, 0.05)'
-            };
-
-            const layout = {
-                margin: { t: 10, b: 40, l: 40, r: 10 },
-                xaxis: {
-                    showgrid: false,
-                    tickfont: { size: 10, color: '#6b7280' }
-                },
-                yaxis: {
-                    range: [0, 105],
-                    tickfont: { size: 10, color: '#6b7280' },
-                    gridcolor: '#f3f4f6'
-                },
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                hovermode: 'closest'
-            };
-
-            const config = {
-                displayModeBar: false,
-                responsive: true
-            };
-
-            Plotly.newPlot('progressionChart', [trace], layout, config);
-        } else {
-            document.getElementById('progressionChart').innerHTML = `
-                <div class="text-center py-5">
-                    <p class="text-muted">Pas assez de données pour générer un graphique.</p>
-                </div>
-            `;
-        }
-    });
-</script>
-{% endblock %}
+        </script>
+        {% endblock %}
