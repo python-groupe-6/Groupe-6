@@ -19,12 +19,52 @@
 
 **EduQuiz AI** est une plateforme intelligente qui utilise l'IA (Google Gemini) pour transformer instantanément vos documents (PDF, DOCX, TXT) en quiz interactifs.
 
-### 🌟 Points Forts
-- 🤖 **IA Avancée** : Génération de contenu intelligent via Google Gemini.
-- 📊 **Tableau de Bord** : Statistiques détaillées et suivi de progression.
-- 🎨 **Design Premium** : Interface moderne, fluide et mode sombre natif.
-- 📄 **Export PDF** : Téléchargez vos résultats pour réviser hors ligne.
-- 🔒 **Sécurité** : Authentification robuste et gestion sécurisée des données.
+### 🌟 Points Forts (EduQuiz AI Pro)
+- 🤖 **IA Multimodale** : Génération de quiz via Documents, **YouTube** et **Photos (OCR)**.
+- 🧠 **Apprentissage SRS** : Système de répétition espacée et tuteur IA interactif.
+- 🎮 **Gamification** : XP, niveaux, badges et séries (Streaks) pour l'engagement.
+- 📊 **Analytiques Pro** : Heatmap d'activité et analyse des lacunes par l'IA.
+- 🌐 **Social & Community** : Bibliothèque publique et partage communautaire.
+- 🎨 **Design Premium** : Interface ultra-moderniste, fluide et mode sombre.
+
+---
+
+## 📸 Aperçu du Parcours Utilisateur
+
+Découvrez l'expérience **EduQuiz AI** étape par étape :
+
+### 1. Une Suite d'Outils Complète (Public)
+![Landing Page](assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20103117.png)
+
+### 2. Inscription & Sécurité
+![Inscription](assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20103200.png)
+
+### 3. Votre Centre de Commande (Dashboard)
+![Dashboard](assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102430.png)
+
+### 4. Progression & Gamification (XP, Niveaux, Badges)
+![Gamification](assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102747.png)
+
+### 5. Génération Multimodale (YouTube, PDF, OCR)
+![Quiz Setup](assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102559.png)
+
+### 6. Analyse des Résultats
+![Résultats](assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102630.png)
+
+### 7. Système de Révision Espacée (SRS)
+![SRS](assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102934.png)
+
+### 8. Bibliothèque Communautaire
+![Bibliothèque](assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102958.png)
+
+### 9. Profil Utilisateur Personnalisé
+![Profil](assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102817.png)
+
+### 10. Paramètres & Mode Sombre
+![Paramètres](assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102831.png)
+
+### 11. Offres Premium & Footer
+![Pricing](assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20103040.png)
 
 ---
 

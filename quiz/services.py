@@ -59,6 +59,48 @@ class DocumentProcessor:
             print(f"Error reading DOCX: {e}")
             return None
 
+class YouTubeProcessor:
+    @staticmethod
+    def extract_transcript(url):
+        from youtube_transcript_api import YouTubeTranscriptApi
+        try:
+            video_id = YouTubeProcessor._extract_video_id(url)
+            if not video_id:
+                return None
+            
+            transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['fr', 'en'])
+            full_text = " ".join([item['text'] for item in transcript_list])
+            return full_text
+        except Exception as e:
+            print(f"YouTube Transcript Error: {e}")
+            return None
+
+    @staticmethod
+    def _extract_video_id(url):
+        # basic regex for youtube ids
+        pattern = r"(?:v=|\/)([0-9A-Za-z_-]{11}).*"
+        match = re.search(pattern, url)
+        return match.group(1) if match else None
+
+class OCRProcessor:
+    @staticmethod
+    def extract_text_from_image(image_file):
+        import google.generativeai as genai
+        try:
+            # Re-read file to pass as bytes to Gemini
+            image_data = image_file.read()
+            model = genai.GenerativeModel('gemini-1.5-flash')
+            
+            response = model.generate_content([
+                "Analyse cette image et extrais-en tout le texte lisible. Si c'est un document, reproduis le texte fidèlement.",
+                {"mime_type": "image/jpeg", "data": image_data}
+            ])
+            return response.text
+        except Exception as e:
+            print(f"OCR Error: {e}")
+            return None
+
+
 class QuizGeneratorService:
     def __init__(self):
         # Prioritize Google API Key, then OpenAI, then OpenRouter
@@ -258,9 +300,47 @@ class QuizGeneratorService:
                 return self._generate_with_openai(text, num_questions, difficulty)
             if self.use_openrouter:
                 return self._generate_with_openrouter(text, num_questions, difficulty)
+            if self.use_openrouter:
+                return self._generate_with_openrouter(text, num_questions, difficulty)
             return self._simple_regex_fallback(text, num_questions)
 
+    def analyze_gaps(self, score_details):
+        """
+        Analyze recent mistakes using Gemini to identify weak areas.
+        """
+        if not self.use_google_direct or not self.model:
+            return "Analyse indisponible pour le moment."
+        
+        mistakes = [d for d in score_details if not d.is_correct]
+        if not mistakes:
+            return "Félicitations ! Vous maîtrisez parfaitement les sujets récents."
+        
+        data_to_analyze = []
+        for d in mistakes[:15]: # Analyze last 15 mistakes
+            data_to_analyze.append({
+                "question": d.question.text,
+                "user_answer": d.user_answer,
+                "correct_answer": d.question.correct_answer,
+                "context": d.question.quiz.title if d.question.quiz else "Inconnu"
+            })
+            
+        prompt = f"""
+        En tant qu'expert pédagogique, analyse ces erreurs récentes d'un étudiant :
+        {json.dumps(data_to_analyze)}
+        
+        1. Identifie les thématiques ou concepts mal compris.
+        2. Propose un plan d'action de 3 points concrets pour s'améliorer.
+        3. Sois encourageant et précis.
+        Réponds en Markdown.
+        """
+        try:
+            response = self.model.generate_content(prompt)
+            return response.text
+        except Exception as e:
+            return f"Erreur lors de l'analyse : {e}"
+
     def _simple_regex_fallback(self, text, num_questions):
+
         # Segmentation par ponctuation OU passage à la ligne pour gérer les listes/tableaux
         segments = [s.strip() for s in re.split(r'[.!?\n]', text) if len(s.strip()) > 20]
         

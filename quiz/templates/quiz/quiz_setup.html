@@ -16,9 +16,39 @@
             <div class="card-body p-4 p-md-5 pt-0">
                 <form method="post" enctype="multipart/form-data" id="quizSetupForm" class="needs-validation">
                     {% csrf_token %}
+                    <!-- Source Selection -->
                     <div class="mb-4">
+                        <label class="form-label fw-bold mb-3">{% trans "Source du contenu" %}</label>
+                        <div class="d-flex gap-2 source-selector">
+                            <input type="radio" class="btn-check" name="source_type" id="src-doc" value="document"
+                                checked>
+                            <label class="btn btn-outline-primary rounded-4 flex-grow-1 py-3" for="src-doc">
+                                <i class="fas fa-file-alt d-block mb-2 fs-4"></i> Document
+                            </label>
+
+                            <input type="radio" class="btn-check" name="source_type" id="src-yt" value="youtube">
+                            <label class="btn btn-outline-primary rounded-4 flex-grow-1 py-3" for="src-yt">
+                                <i class="fab fa-youtube d-block mb-2 fs-4"></i> YouTube
+                            </label>
+
+                            <input type="radio" class="btn-check" name="source_type" id="src-img" value="image">
+                            <label class="btn btn-outline-primary rounded-4 flex-grow-1 py-3" for="src-img">
+                                <i class="fas fa-camera d-block mb-2 fs-4"></i> Photo/OCR
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Fields -->
+                    <div id="field-document" class="source-field mb-4">
                         {{ form.document|as_crispy_field }}
                     </div>
+                    <div id="field-youtube" class="source-field mb-4 d-none">
+                        {{ form.youtube_url|as_crispy_field }}
+                    </div>
+                    <div id="field-image" class="source-field mb-4 d-none">
+                        {{ form.image|as_crispy_field }}
+                    </div>
+
                     <div class="row g-3 mb-4">
                         <div class="col-md-4">
                             {{ form.num_questions|as_crispy_field }}
@@ -56,7 +86,16 @@
 </div>
 
 <script>
+    // Source switching logic
+    document.querySelectorAll('input[name="source_type"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            document.querySelectorAll('.source-field').forEach(f => f.classList.add('d-none'));
+            document.getElementById('field-' + e.target.value).classList.remove('d-none');
+        });
+    });
+
     document.getElementById('quizSetupForm').addEventListener('submit', function (e) {
+
         const btn = document.getElementById('submitBtn');
         const btnText = document.getElementById('btnText');
         const btnIcon = document.getElementById('btnIcon');

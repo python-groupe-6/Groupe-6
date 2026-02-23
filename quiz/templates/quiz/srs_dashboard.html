@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}Révision Espacée (SRS) - EduQuiz AI{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h1 class="brand-font display-6 text-primary mb-1">{% trans "Révision Espacée" %}</h1>
+            <p class="text-muted mb-0">{% trans "Boostez votre mémoire avec l'algorithme SRS." %}</p>
+        </div>
+        <a href="{% url 'quiz:srs_review' %}"
+            class="btn btn-primary-custom px-4 py-3 {% if due_today == 0 %}disabled{% endif %}">
+            <i class="fas fa-play me-2"></i> {% trans "Commencer la révision" %}
+        </a>
+    </div>
+
+    <!-- Stats -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-6">
+            <div class="bg-white p-4 rounded-4 shadow-sm border border-light d-flex align-items-center gap-4">
+                <div class="icon-circle bg-primary-subtle text-primary fs-3" style="width:60px; height:60px;">📚</div>
+                <div>
+                    <h3 class="fw-bold mb-0">{{ total_cards }}</h3>
+                    <p class="text-muted mb-0 small">{% trans "Flashcards totales" %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bg-white p-4 rounded-4 shadow-sm border border-light d-flex align-items-center gap-4">
+                <div class="icon-circle bg-warning-subtle text-warning fs-3" style="width:60px; height:60px;">🔔</div>
+                <div>
+                    <h3 class="fw-bold mb-0">{{ due_today }}</h3>
+                    <p class="text-muted mb-0 small">{% trans "À réviser aujourd'hui" %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- List -->
+    <div class="bg-white p-4 rounded-5 shadow-sm border">
+        <h4 class="fw-bold mb-4 brand-font">{% trans "Mes dernières Flashcards" %}</h4>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>{% trans "Question" %}</th>
+                        <th>{% trans "Prochaine révision" %}</th>
+                        <th>{% trans "Niveau SRS" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for card in flashcards %}
+                    <tr>
+                        <td class="text-truncate" style="max-width: 300px;">{{ card.question }}</td>
+                        <td>{{ card.next_review_date|date:"d M Y" }}</td>
+                        <td>
+                            <span
+                                class="badge rounded-pill {% if card.repetition_count > 5 %}bg-success{% elif card.repetition_count > 2 %}bg-primary{% else %}bg-info{% endif %}">
+                                Lvl {{ card.repetition_count }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center py-4 text-muted">
+                            {% trans "Aucune flashcard pour le moment. Allez dans l'analyse d'un quiz pour en ajouter !"
+                            %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

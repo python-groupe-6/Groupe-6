@@ -1,0 +1,64 @@
+# Cahier des Charges - EduQuiz AI Pro
+
+## 1. Vision et Objectifs
+**EduQuiz AI** est une plateforme d'apprentissage intelligente de nouvelle génération qui transforme n'importe quelle source de contenu (Documents, Vidéos YouTube, Notes manuscrites) en un écosystème d'apprentissage complet.
+
+![Interface d'accueil Premium](../assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102430.png)
+
+## 2. Public Cible
+- **Enseignants & Formateurs** : Digitalisation rapide de supports de cours.
+- **Étudiants & Autodidactes** : Préparation optimisée aux examens et concours.
+- **Créateurs de Contenu** : Valorisation pédagogique de contenus vidéo ou textuels.
+
+## 3. Périmètre Fonctionnel
+
+### A. Sources de Contenu Multi-plateformes
+- **Documents Intelligents** : Analyse de fichiers PDF, DOCX, TXT avec extraction contextuelle.
+- **Video Learning (YouTube)** : Extraction automatique des transcriptions pour générer des quiz à partir de vidéos pédagogiques.
+- **Vision & OCR** : Numérisation de notes manuscrites ou imprimées via photo (Gemini Vision).
+
+![Configuration de la génération multimodale](../assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102559.png)
+
+### B. Moteur d'Apprentissage (E-Learning)
+- **Spaced Repetition System (SRS)** : Algorithme SM-2 intégré pour planifier les révisions et combattre la courbe de l'oubli.
+- **Tuteur IA Interactif** : Discussion en temps réel avec Gemini pour éclaircir des concepts complexes après un quiz.
+- **Flashcards Dynamiques** : Transformation instantanée des erreurs de quiz en cartes de révision.
+
+![Tableau de bord de Révision Espacée (SRS)](../assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102934.png)
+
+### C. Gamification & Engagement
+- **Système de Progression** : Points d'expérience (XP), niveaux de maîtrise et indicateurs de régularité (Streaks).
+- **Achievements** : Collection de badges pour récompenser les étapes clés de l'apprentissage.
+- **Dashboard de Performance** : Vue d'ensemble visuelle de la progression et des acquis.
+
+![Système de Gamification et Dashboard](../assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102747.png)
+
+### D. Deep Analytics
+- **Activity Heatmap** : Visualisation calendaire de l'intensité d'étude.
+- **Gap Analysis (IA)** : Diagnostic automatique des points faibles basé sur l'historique des réponses.
+
+### E. Social & Communauté
+- **Bibliothèque Publique** : Partage et découverte de quiz créés par la communauté.
+- **Social Interaction** : Système de likes et de favoris.
+
+![Bibliothèque Publique](../assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102958.png)
+
+## 4. Spécifications Techniques
+- **Framework** : Django 6.x (Backend robuste et évolutif).
+- **Intelligence Artificielle** : API Gemini 1.5 Pro / Flash (Google Cloud).
+- **Base de Données** : PostgreSQL (Production Render).
+- **Front-end** : Vanilla CSS 3 (Design Premium, Glassmorphism).
+
+## 5. Identité Visuelle et Assets Illustrator
+Afin de garantir une interface premium et cohérente, EduQuiz AI Pro s'appuie sur des ressources visuelles vectorielles et haute fidélité.
+
+- **Logo Principal** : `assets/logo.png` (Export haute définition issu d'Illustrator).
+- **Illustration Hero** : `assets/hero.png` (Visuel d'accueil illustrant l'IA et l'éducation, style Illustrator).
+- **Visuals de Marque** : `static/images/about_hero.png` (Illustration d'ambiance).
+
+![Esthétique Premium et Inscription](../assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20103117.png)
+
+## 6. Exigences de Qualité & Sécurité
+- **Performance** : Temps de génération de quiz < 8 secondes.
+- **UX/UI** : Design "Responsive Premier", animations fluides et captures réelles intégrées.
+- **Sécurité** : Gestion stricte des clés API via variables d'environnement (.env).

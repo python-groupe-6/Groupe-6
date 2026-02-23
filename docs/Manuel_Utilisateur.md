@@ -1,34 +1,48 @@
-# Manuel Utilisateur - EduQuiz AI
+# Manuel Utilisateur - EduQuiz AI Pro
 
 ## 1. Introduction
-Bienvenue dans **EduQuiz AI**, votre assistant intelligent pour la création de quiz de révision. Ce manuel vous guide à travers les étapes pour tirer le meilleur parti de l'application.
+Bienvenue dans **EduQuiz AI Pro**, votre écosystème d'apprentissage intelligent. Ce manuel vous guide pour exploiter toutes les puissantes fonctionnalités de l'IA au service de votre réussite.
 
-## 2. Guide de Démarrage
-### Étape 1 : Chargement d'un document
-- Rendez-vous sur l'interface principale.
-- Glissez-déposez un fichier (PDF, DOCX ou TXT) dans la zone prévue à cet effet.
-- Attendez la notification "Document chargé avec succès !".
-- Cliquez sur **"Passer à la configuration"**.
+## 2. Guide de Démarrage Rapide
 
-### Étape 2 : Configuration du Quiz
-- Dans la barre latérale gauche (ou sur l'écran central), ajustez :
-    - **Nombre de questions** (de 3 à 15).
-    - **Niveau de difficulté** (Standard, Avancée, Expert).
-- Cliquez sur **"Lancer la génération magique"**.
+### Étape 1 : Connexion & Dashboard
+- Connectez-vous à votre compte.
+- Accédez à votre **Tableau de Bord** pour voir vos XP, Streaks et Badges.
+- Cliquez sur **"Nouveau Quiz"** pour démarrer.
 
-### Étape 3 : Réalisation du Quiz
-- Répondez aux questions en sélectionnant les options.
-- Utilisez les boutons **"Précédent"** et **"Suivant"** pour naviguer.
-- Une fois toutes les questions répondues, cliquez sur **"Terminer le Quiz"**.
+### Étape 2 : Choix de la Source 💡
+Choisissez votre méthode d'apprentissage :
+- **Document** : Chargez un PDF, DOCX ou TXT.
+- **YouTube** : Collez l'URL d'une vidéo pédagogique.
+- **Photo/OCR** : Téléchargez une photo de vos notes ou d'un livre (L'IA numérisera le texte automatiquement).
 
-### Étape 4 : Analyse des Résultats
-- Consultez votre score global via la jauge interactive.
-- Explorez la **"Correction Détaillée"** pour voir vos erreurs et lire les explications.
-- Utilisez le mode **"Flashcards Mémos"** pour réviser rapidement les concepts clés.
-- Cliquez sur **"Télécharger le rapport (PDF)"** pour obtenir un bilan complet.
+### Étape 3 : Configuration & Génération
+- Définissez le **Nombre de questions** et le **Niveau de difficulté**.
+- Cliquez sur **"Lancer la génération"**. L'IA prépare vos questions en quelques secondes.
 
-## 3. Paramètres Avancés
-- **Réinitialisation** : Utilisez le bouton **"Réinitialiser"** dans la barre latérale pour effacer la session en cours et commencer un nouveau document.
+### Étape 4 : Réalisation & Analyse
+- Répondez au quiz interactif.
+- Sur la page d'analyse, consultez votre score et les explications.
+- **Tuteur IA** : Cliquez sur le bouton "Tuteur IA" pour poser une question spécifique sur une correction.
+- **Flashcards** : Cliquez sur "+" pour ajouter une question difficile à votre programme de révision SRS.
 
-## 4. Support et Contact
-En cas de problème technique, contactez l'équipe support à : `contacteduquizai@gmail.com`
+## 3. Techniques de Révision Avancées
+
+### A. Répétition Espacée (SRS)
+- Allez dans la section **"Révision SRS"**.
+- L'algorithme vous présente les cartes que vous risquez d'oublier aujourd'hui.
+- Évaluez votre facilité de réponse pour planifier la prochaine révision.
+
+### B. Gap Analysis
+- Allez dans **"Analyses Pro"**.
+- Consultez le rapport de l'IA qui identifie vos lacunes récurrentes et vous suggère des pistes d'amélioration.
+
+### C. Communauté
+- Explorez la **"Bibliothèque Publique"** pour trouver des quiz créés par d'autres.
+- Likez les quiz utiles et partagez les vôtres via le bouton "Partager" dans votre historique.
+
+## 4. Support
+Besoin d'aide ? Contactez-nous via le formulaire de contact ou à `support@eduquiz-ai.com`.
+
+---
+*EduQuiz AI Pro - Votre intelligence, augmentée.*

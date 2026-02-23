@@ -133,7 +133,29 @@
                     </li>
                     <li>
                         <a class="dropdown-item rounded-3 py-2 d-flex align-items-center gap-3"
+                            href="{% url 'quiz:srs_dashboard' %}">
+                            <span class="fs-5">🧠</span>
+                            <span>{% trans "Révision SRS" %}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item rounded-3 py-2 d-flex align-items-center gap-3"
+                            href="{% url 'quiz:public_library' %}">
+                            <span class="fs-5">📚</span>
+                            <span>{% trans "Bibliothèque" %}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item rounded-3 py-2 d-flex align-items-center gap-3"
+                            href="{% url 'quiz:analytics_dashboard' %}">
+                            <span class="fs-5">📊</span>
+                            <span>{% trans "Analyses IA" %}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item rounded-3 py-2 d-flex align-items-center gap-3"
                             href="{% url 'accounts:subscription' %}">
+
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="text-muted">

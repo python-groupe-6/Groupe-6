@@ -50,13 +50,51 @@
                 {% endfor %}
             </div>
             {% if q.explanation %}<div class="explanation-box ms-5 p-3 rounded-3">
-                <p class="mb-0 small text-muted"><i class="fas fa-lightbulb text-warning me-1"></i>{{q.explanation}}</p>
+                <p class="mb-2 small text-muted"><i class="fas fa-lightbulb text-warning me-1"></i>{{q.explanation}}</p>
+                <div class="d-flex gap-2">
+                    <button
+                        onclick="saveToFlashcard('{{q.text|escapejs}}', '{{q.correct_answer|escapejs}}', '{{q.explanation|escapejs}}', this)"
+                        class="btn btn-sm btn-outline-success rounded-pill px-3 py-1 fw-bold"
+                        style="font-size:0.75rem;"><i class="fas fa-plus-circle me-1"></i>Flashcard</button>
+                    <button onclick="openAITutor('{{q.text|escapejs}}', '{{q.explanation|escapejs}}')"
+                        class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1 fw-bold"
+                        style="font-size:0.75rem;"><i class="fas fa-robot me-1"></i>Tuteur AI</button>
+                </div>
             </div>{% endif %}
         </div>
         {% endfor %}
     </div>
     {% endif %}
+
+    <!-- AI Tutor Modal -->
+    <div class="modal fade" id="aiTutorModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 shadow-lg">
+                <div class="modal-header bg-primary text-white py-3">
+                    <h5 class="modal-title small fw-bold"><i class="fas fa-robot me-2"></i>Tuteur IA Interactif</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div id="ai-chat-messages" class="p-4"
+                        style="height:350px;overflow-y:auto;background:#f8fafc;font-size:0.9rem;">
+                        <div class="bg-white p-3 rounded-3 border mb-3 small">Posez vos questions sur ce sujet pour
+                            mieux comprendre.</div>
+                    </div>
+                    <div class="p-3 bg-white border-top">
+                        <div class="input-group">
+                            <input type="text" id="ai-chat-input" class="form-control rounded-start-pill border-end-0"
+                                placeholder="Votre question...">
+                            <button onclick="sendAIChatMessage()" class="btn btn-primary rounded-end-pill px-4"><i
+                                    class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="d-flex gap-3 mt-5 justify-content-center flex-wrap">
+
         <a href="{% url 'quiz:quiz_history' %}"
             class="btn-outline-custom text-decoration-none px-4 py-2 rounded-pill">Historique</a>
         <a href="{% url 'quiz:quiz_setup' %}"
@@ -144,5 +182,55 @@
             });
         }, 300);
     });
+
+    let currentQuestion = '';
+    let currentContext = '';
+
+    window.saveToFlashcard = async function (q, a, exp, btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        try {
+            const resp = await fetch('{% url "quiz:save_flashcard" %}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+                body: JSON.stringify({ question: q, answer: a, explanation: exp })
+            });
+            if (resp.ok) {
+                btn.className = 'btn btn-sm btn-success rounded-pill px-3 py-1 fw-bold';
+                btn.innerHTML = '<i class="fas fa-check"></i> Sauvé';
+            }
+        } catch (e) { console.error(e); btn.disabled = false; btn.innerHTML = 'Erreur'; }
+    };
+
+    window.openAITutor = function (q, exp) {
+        currentQuestion = q;
+        currentContext = exp;
+        const modal = new bootstrap.Modal(document.getElementById('aiTutorModal'));
+        modal.show();
+    };
+
+    window.sendAIChatMessage = async function () {
+        const input = document.getElementById('ai-chat-input');
+        const msg = input.value.trim();
+        if (!msg) return;
+
+        const container = document.getElementById('ai-chat-messages');
+        container.innerHTML += `<div class="message user bg-primary text-white p-3 rounded-3 mb-3 small align-self-end ms-auto" style="max-width:80%;">User: ${msg}</div>`;
+        input.value = '';
+        container.scrollTop = container.scrollHeight;
+
+        try {
+            const resp = await fetch('{% url "quiz:ai_tutor_chat" %}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+                body: JSON.stringify({ question: currentQuestion, context: currentContext, message: msg })
+            });
+            const data = await resp.json();
+            if (data.success) {
+                container.innerHTML += `<div class="message ai bg-white p-3 rounded-3 border mb-3 small" style="max-width:80%;"><b>Tuteur IA:</b> ${data.response}</div>`;
+                container.scrollTop = container.scrollHeight;
+            }
+        } catch (e) { console.error(e); }
+    };
 </script>
 {% endblock %}

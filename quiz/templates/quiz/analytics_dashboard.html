@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}Analytiques Avancées - EduQuiz AI{% endblock %}
+
+{% block content %}
+<div class="container py-5 animate-fade-in">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h1 class="brand-font display-6 text-primary mb-1">{% trans "Analytiques Pro" %}</h1>
+            <p class="text-muted mb-0">{% trans "Suivez vos progrès et identifiez vos lacunes grâce à l'IA." %}</p>
+        </div>
+        <div class="d-flex gap-2">
+            <div class="bg-white px-4 py-2 rounded-4 shadow-sm border border-light text-center">
+                <span class="d-block small text-muted">{% trans "Score Moyen" %}</span>
+                <span class="fw-bold text-primary fs-5">{{ avg_score }}/{{ total_quizzes|default:10 }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Heatmap / Activity Chart -->
+        <div class="col-lg-7">
+            <div class="bg-white p-4 rounded-5 shadow-sm border h-100">
+                <h4 class="fw-bold mb-4 brand-font"><i class="fas fa-chart-line me-2 text-primary"></i> {% trans
+                    "Activité des 30 derniers jours" %}</h4>
+                <div style="height: 300px;">
+                    <canvas id="activityChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gap Analysis / AI Insights -->
+        <div class="col-lg-5">
+            <div class="bg-primary text-white p-4 rounded-5 shadow-sm h-100 overflow-hidden position-relative animate-fade-in"
+                style="min-height: 400px;">
+                <div class="position-absolute top-0 end-0 p-4 opacity-10" style="z-index: 0;">
+                    <i class="fas fa-robot fa-6x"></i>
+                </div>
+                <div class="position-relative" style="z-index: 1;">
+                    <h4 class="fw-bold mb-4 brand-font">
+                        <i class="fas fa-brain me-2"></i> {% trans "Deep Learning Insights" %}
+                    </h4>
+                    <div class="gap-analysis-content" style="font-size: 0.95rem; line-height: 1.6;">
+                        {{ gap_feedback|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const rawData = JSON.parse('{{ activity_json|safe }}');
+        const ctx = document.getElementById('activityChart').getContext('2d');
+
+        // Prepare labels (last 30 days)
+        const labels = [];
+        const data = [];
+        for (let i = 29; i >= 0; i--) {
+            const date = new Date();
+            date.setDate(date.getDate() - i);
+            const dateStr = date.toISOString().split('T')[0];
+            labels.push(date.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' }));
+            data.push(rawData[dateStr] || 0);
+        }
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '{% trans "Quiz complétés" %}',
+                    data: data,
+                    backgroundColor: '#4f46e5',
+                    borderRadius: 8,
+                    barThickness: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { display: false }, ticks: { stepSize: 1 } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    });
+</script>
+
+<style>
+    .gap-analysis-content {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .gap-analysis-content::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .gap-analysis-content::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+    }
+</style>
+{% endblock %}

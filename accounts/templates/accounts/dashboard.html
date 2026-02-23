@@ -5,12 +5,26 @@
 
 {% block content %}
 <div class="animate-fade-in">
-    <div class="mb-4">
-        <h1 class="brand-font display-6 text-primary">{% trans "Tableau de bord" %}</h1>
-        {% trans "Bienvenue," as welcome_prefix %}
-        {% trans ". Voici un aperçu de vos activités." as welcome_suffix %}
-        <p class="text-muted">{{ welcome_prefix }} {{ user.username }}{{ welcome_suffix }}</p>
+    <div class="row align-items-end mb-4 gap-3">
+        <div class="col-md-7">
+            <h1 class="brand-font display-6 text-primary mb-1">{% trans "Tableau de bord" %}</h1>
+            <p class="text-muted mb-0">{% trans "Bienvenue," %} {{ user.username }}. {% trans "Voici un aperçu de vos
+                activités." %}</p>
+        </div>
+        <div class="col-md-4 ms-auto">
+            <div class="progress-container bg-white p-3 rounded-4 shadow-sm border border-light">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-bold small text-uppercase letter-spacing-1">Niveau {{ user.profile.level }}</span>
+                    <span class="small text-muted">{{ user.profile.xp }} XP</span>
+                </div>
+                <div class="progress" style="height: 10px; border-radius: 10px; background: #f3f4f6;">
+                    <div class="progress-bar bg-primary-gradient progress-dynamic" role="progressbar"
+                        data-width="{{ user.profile.xp_progress }}" style="border-radius: 10px;"></div>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <!-- Stats Cards -->
     <div class="row g-4 mb-5">
@@ -40,13 +54,31 @@
         </div>
         <div class="col-md-3">
             <div class="bg-white p-4 rounded-4 shadow-sm border border-light text-center h-100">
-                <div class="icon-circle mb-3 bg-info-subtle text-info mx-auto"
-                    style="width: 50px; height: 50px; font-size: 1.2rem;">⏱️</div>
-                <h3 class="fw-bold mb-1">{{ stats.time_spent }}</h3>
-                <p class="small text-muted mb-0">{% trans "Temps d'étude" %}</p>
+                <div class="icon-circle mb-3 bg-danger-subtle text-danger mx-auto"
+                    style="width: 50px; height: 50px; font-size: 1.2rem;">🔥</div>
+                <h3 class="fw-bold mb-1">{{ user.profile.streak }}</h3>
+                <p class="small text-muted mb-0">{% trans "Jours de suite" %}</p>
             </div>
         </div>
     </div>
+
+    <!-- Badges Section -->
+    <div class="mb-5">
+        <h4 class="fw-bold mb-4 brand-font">{% trans "Mes Badges" %}</h4>
+        <div class="d-flex flex-wrap gap-3">
+            {% for badge in user.profile.badges.all %}
+            <div class="badge-item bg-white p-3 rounded-4 shadow-sm border border-light text-center"
+                style="width: 120px;">
+                <div class="badge-icon mb-2 fs-2">{{ badge.icon|safe }}</div>
+                <div class="small fw-bold">{{ badge.name }}</div>
+            </div>
+            {% empty %}
+            <div class="text-muted small">{% trans "Vous n'avez pas encore de badges. Continuez à vous entraîner !" %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
 
     <!-- Quick Actions & Recent Activity -->
     <div class="row g-4">
@@ -54,19 +86,32 @@
             <div class="bg-white p-4 rounded-5 shadow-sm border h-100">
                 <h4 class="fw-bold mb-4 brand-font">{% trans "Actions Rapides" %}</h4>
                 <div class="row g-3">
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <a href="{% url 'quiz:quiz_setup' %}"
                             class="btn btn-outline-primary w-100 py-3 rounded-4 d-flex align-items-center justify-content-center gap-2">
                             <span>✨ {% trans "Nouveau Quiz" %}</span>
                         </a>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
+                        <a href="{% url 'quiz:srs_dashboard' %}"
+                            class="btn btn-outline-warning w-100 py-3 rounded-4 d-flex align-items-center justify-content-center gap-2">
+                            <span>🧠 {% trans "Révision SRS" %}</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-3">
+                        <a href="{% url 'quiz:analytics_dashboard' %}"
+                            class="btn btn-outline-info w-100 py-3 rounded-4 d-flex align-items-center justify-content-center gap-2">
+                            <span>📊 {% trans "Analyses IA" %}</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-3">
                         <a href="{% url 'quiz:quiz_history' %}"
                             class="btn btn-outline-secondary w-100 py-3 rounded-4 d-flex align-items-center justify-content-center gap-2">
                             <span>📂 {% trans "Mon Historique" %}</span>
                         </a>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="col-lg-4">
@@ -87,4 +132,14 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            document.querySelectorAll('.progress-dynamic').forEach(b => {
+                const w = b.getAttribute('data-width');
+                if (w) b.style.width = w + '%';
+            });
+        }, 300);
+    });
+</script>
 {% endblock %}
