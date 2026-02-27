@@ -9,8 +9,6 @@
 
 **Transformez vos documents en parcours d'apprentissage interactifs avec l'IA**
 
-[Démo en ligne](https://eduquiz-ai.onrender.com)
-
 </div>
 
 ---
