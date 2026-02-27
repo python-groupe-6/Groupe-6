@@ -1,64 +1,95 @@
-# Cahier des Charges - EduQuiz AI Pro
+# 🎓 EduQuiz AI Pro - Cahier des Charges
 
-## 1. Vision et Objectifs
-**EduQuiz AI** est une plateforme d'apprentissage intelligente de nouvelle génération qui transforme n'importe quelle source de contenu (Documents, Vidéos YouTube, Notes manuscrites) en un écosystème d'apprentissage complet.
+> [!NOTE]
+> **EduQuiz AI Pro** est une plateforme d'apprentissage intelligente de nouvelle génération qui transforme n'importe quelle source de contenu (Documents, Vidéos YouTube, Notes manuscrites) en un écosystème d'apprentissage complet.
+
+---
+
+## 🚀 1. Vision et Objectifs
+L'objectif principal est de démocratiser l'accès à une méthode d'apprentissage structurée en automatisant la création de supports pédagogiques à partir de sources disparates.
 
 ![Interface d'accueil Premium](../assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102430.png)
 
-## 2. Public Cible
-- **Enseignants & Formateurs** : Digitalisation rapide de supports de cours.
-- **Étudiants & Autodidactes** : Préparation optimisée aux examens et concours.
-- **Créateurs de Contenu** : Valorisation pédagogique de contenus vidéo ou textuels.
+---
 
-## 3. Périmètre Fonctionnel
+## 👥 2. Public Cible
 
-### A. Sources de Contenu Multi-plateformes
-- **Documents Intelligents** : Analyse de fichiers PDF, DOCX, TXT avec extraction contextuelle.
-- **Video Learning (YouTube)** : Extraction automatique des transcriptions pour générer des quiz à partir de vidéos pédagogiques.
-- **Vision & OCR** : Numérisation de notes manuscrites ou imprimées via photo (Gemini Vision).
+> [!TIP]
+> Trois segments clés bénéficient directement de la puissance d'EduQuiz AI.
+
+| Segment | Usage Principal |
+| :--- | :--- |
+| **Enseignants & Formateurs** | Digitalisation rapide de supports de cours. |
+| **Étudiants & Autodidactes** | Préparation optimisée aux examens et concours. |
+| **Créateurs de Contenu** | Valorisation pédagogique de contenus vidéo ou textuels. |
+
+---
+
+## 🛠️ 3. Périmètre Fonctionnel
+
+### A. Flux de Génération Multimodale
+L'IA traite différents types d'entrées pour extraire le savoir essentiel.
+
+```mermaid
+graph LR
+    A[Documents PDF/DOCX] --> D[Extraction IA]
+    B[YouTube URL] --> D
+    C[Photos/OCR] --> D
+    D --> E[Quiz Interactif]
+    D --> F[Flashcards SRS]
+```
 
 ![Configuration de la génération multimodale](../assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102559.png)
 
-### B. Moteur d'Apprentissage (E-Learning)
-- **Spaced Repetition System (SRS)** : Algorithme SM-2 intégré pour planifier les révisions et combattre la courbe de l'oubli.
-- **Tuteur IA Interactif** : Discussion en temps réel avec Gemini pour éclaircir des concepts complexes après un quiz.
-- **Flashcards Dynamiques** : Transformation instantanée des erreurs de quiz en cartes de révision.
+### B. Moteur d'Apprentissage Intelligent (SRS)
+- **Spaced Repetition System (SRS)** : Utilisation de l'algorithme **SM-2** pour maximiser la rétention.
+- **Tuteur IA Interactif** : Support en temps réel via **Gemini** pour approfondir les concepts.
+- **Flashcards Dynamiques** : Pont automatique entre erreurs de quiz et révision.
 
 ![Tableau de bord de Révision Espacée (SRS)](../assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102934.png)
 
-### C. Gamification & Engagement
-- **Système de Progression** : Points d'expérience (XP), niveaux de maîtrise et indicateurs de régularité (Streaks).
-- **Achievements** : Collection de badges pour récompenser les étapes clés de l'apprentissage.
-- **Dashboard de Performance** : Vue d'ensemble visuelle de la progression et des acquis.
+### C. Gamification & Analytics
+- **Streaks & XP** : Mécaniques d'engagement pour encourager la régularité.
+- **Activity Heatmap** : Visualisation claire de l'intensité d'étude.
+- **Gap Analysis** : Diagnostic IA des points faibles pour cibler les prochaines révisions.
 
 ![Système de Gamification et Dashboard](../assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102747.png)
 
-### D. Deep Analytics
-- **Activity Heatmap** : Visualisation calendaire de l'intensité d'étude.
-- **Gap Analysis (IA)** : Diagnostic automatique des points faibles basé sur l'historique des réponses.
-
-### E. Social & Communauté
-- **Bibliothèque Publique** : Partage et découverte de quiz créés par la communauté.
-- **Social Interaction** : Système de likes et de favoris.
+### D. Communauté & Partage
+- **Bibliothèque Publique** : Mutualisation des ressources créées par les utilisateurs.
+- **Interactions Sociales** : Favoris, likes et partage de decks de révision.
 
 ![Bibliothèque Publique](../assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20102958.png)
 
-## 4. Spécifications Techniques
-- **Framework** : Django 6.x (Backend robuste et évolutif).
-- **Intelligence Artificielle** : API Gemini 1.5 Pro / Flash (Google Cloud).
-- **Base de Données** : PostgreSQL (Production Render).
-- **Front-end** : Vanilla CSS 3 (Design Premium, Glassmorphism).
+---
 
-## 5. Identité Visuelle et Assets Illustrator
-Afin de garantir une interface premium et cohérente, EduQuiz AI Pro s'appuie sur des ressources visuelles vectorielles et haute fidélité.
+## 💻 4. Spécifications Techniques
 
-- **Logo Principal** : `assets/logo.png` (Export haute définition issu d'Illustrator).
-- **Illustration Hero** : `assets/hero.png` (Visuel d'accueil illustrant l'IA et l'éducation, style Illustrator).
-- **Visuals de Marque** : `static/images/about_hero.png` (Illustration d'ambiance).
+| Composant | Technologie |
+| :--- | :--- |
+| **Backend** | Django 6.x |
+| **IA** | Gemini 1.5 Pro / Flash |
+| **Base de Données** | PostgreSQL (Render) |
+| **Frontend** | Vanilla CSS 3 (Glassmorphism) |
+
+---
+
+## 🎨 5. Identité Visuelle
+
+Pour garantir une expérience premium, nous utilisons des assets vectoriels haute définition :
+- **Logo** : `assets/logo.png`
+- **Hero Image** : `assets/hero.png`
+- **Marque** : `static/images/about_hero.png`
 
 ![Esthétique Premium et Inscription](../assets/images/Capture%20d%27%C3%A9cran%202026-02-23%20103117.png)
 
-## 6. Exigences de Qualité & Sécurité
-- **Performance** : Temps de génération de quiz < 8 secondes.
-- **UX/UI** : Design "Responsive Premier", animations fluides et captures réelles intégrées.
-- **Sécurité** : Gestion stricte des clés API via variables d'environnement (.env).
+---
+
+## 🛡️ 6. Exigences & Sécurité
+
+> [!IMPORTANT]
+> **Performance et Sécurité sont au cœur d'EduQuiz AI Pro.**
+
+- **Vitesse** : Génération de quiz en moins de 20 secondes.
+- **UX** : Design "Responsive First" avec animations fluides.
+- **Confidentialité** : Clés API sécurisées via `.env`.
