@@ -220,52 +220,58 @@ def export_flashcards(request, quiz_id):
         quiz_obj = Quiz.objects.get(id=quiz_id, user=request.user)
         questions = quiz_obj.questions.all()
         
+        # Robust text cleaning for PDF (Standard fonts only support Latin-1)
+        def clean_text(text):
+            if not text: return ""
+            return text.encode('latin-1', 'replace').decode('latin-1')
+
         pdf = FPDF()
         pdf.set_auto_page_break(auto=True, margin=15)
         pdf.add_page()
         
         # Title
-        pdf.set_font("Arial", 'B', 20)
-        pdf.cell(0, 20, f"Flashcards : {quiz_obj.title}", ln=True, align='C')
+        pdf.set_font("helvetica", 'B', 20)
+        pdf.cell(0, 20, clean_text(f"Flashcards : {quiz_obj.title}"), ln=True, align='C')
         pdf.ln(10)
         
         for i, q in enumerate(questions):
             # Question Card
             pdf.set_fill_color(240, 240, 255)
-            pdf.set_font("Arial", 'B', 12)
-            pdf.cell(0, 10, f"CARTE {i+1} : QUESTION", ln=True, fill=True)
-            pdf.set_font("Arial", '', 11)
-            pdf.multi_cell(0, 10, q.text, border=1)
+            pdf.set_font("helvetica", 'B', 12)
+            pdf.cell(0, 10, clean_text(f"CARTE {i+1} : QUESTION"), ln=True, fill=True)
+            pdf.set_font("helvetica", '', 11)
+            pdf.multi_cell(0, 10, clean_text(q.text), border=1)
             
             # Answer Card
             pdf.set_fill_color(240, 255, 240)
-            pdf.set_font("Arial", 'B', 12)
-            pdf.cell(0, 10, "RÉPONSE CORRECTE", ln=True, fill=True)
-            pdf.set_font("Arial", 'B', 11)
-            pdf.cell(0, 10, f"-> {q.correct_answer}", ln=True, border=1)
+            pdf.set_font("helvetica", 'B', 12)
+            pdf.cell(0, 10, clean_text("RÉPONSE CORRECTE"), ln=True, fill=True)
+            pdf.set_font("helvetica", 'B', 11)
+            pdf.cell(0, 10, clean_text(f"-> {q.correct_answer}"), ln=True, border=1)
             
             # Explanation
             if q.explanation:
                 pdf.set_fill_color(255, 250, 240)
-                pdf.set_font("Arial", 'I', 10)
-                pdf.cell(0, 8, "EXPLICATION / ANALYSE", ln=True, fill=True)
-                pdf.set_font("Arial", '', 10)
-                pdf.multi_cell(0, 8, q.explanation, border=1)
+                pdf.set_font("helvetica", 'I', 10)
+                pdf.cell(0, 8, clean_text("EXPLICATION / ANALYSE"), ln=True, fill=True)
+                pdf.set_font("helvetica", '', 10)
+                pdf.multi_cell(0, 8, clean_text(q.explanation), border=1)
             
             pdf.ln(15)
             
         filename = f"Flashcards_{quiz_obj.id}.pdf"
-        pdf_output = pdf.output(dest='S')
-        buffer = io.BytesIO(pdf_output)
+        pdf_bytes = pdf.output()
+        buffer = io.BytesIO(pdf_bytes)
         buffer.seek(0)
         
         return FileResponse(buffer, as_attachment=True, filename=filename)
         
     except Quiz.DoesNotExist:
-        return HttpResponse(status=404)
+        return HttpResponse("Quiz non trouvé", status=404)
     except Exception as e:
-        print(f"PDF Error: {e}")
-        return HttpResponse(status=500)
+        with open("debug_quiz.log", "a", encoding="utf-8") as f:
+            f.write(f"PDF Export Error for Quiz {quiz_id}: {str(e)}\n")
+        return HttpResponse(f"Erreur lors de la génération du PDF : {str(e)}", status=500)
 
 @login_required
 @require_POST
