@@ -43,8 +43,8 @@
                                 class="btn btn-sm btn-outline-danger rounded-pill px-3">
                                 <i class="far fa-heart"></i>
                             </button>
-                            <a href="{% url 'quiz:quiz_take' %}" class="btn btn-sm btn-primary rounded-pill px-3"
-                                onclick="sessionStorage.setItem('quiz_id', '{{ quiz.id }}')">
+                            <a href="{% url 'quiz:quiz_take_id' quiz.id %}"
+                                class="btn btn-sm btn-primary rounded-pill px-3">
                                 {% trans "Lancer" %}
                             </a>
                         </div>

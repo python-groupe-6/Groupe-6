@@ -81,7 +81,10 @@ def quiz_setup(request):
 
 
 @login_required
-def quiz_take(request):
+def quiz_take(request, quiz_id=None):
+    if quiz_id:
+        request.session['quiz_id'] = quiz_id
+        
     quiz_id = request.session.get('quiz_id')
     if not quiz_id:
         return redirect('quiz:quiz_setup')
